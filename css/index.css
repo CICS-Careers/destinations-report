@@ -160,3 +160,9 @@ div.small-padded-section {
 .callout-bdc h4 {
   color: #29527a;
 }
+div.popular-roles-wrap{
+  width: 100%;
+}
+.roles-wordcloud{
+  margin: auto;
+}
