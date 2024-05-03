@@ -321,3 +321,69 @@ zingchart.render({
     id: 'phd-roles-wordcloud',
     data: phdWordcloudData,
 });
+
+let phdWordcloudData2023 = {
+    "graphset": [{
+        "type": "wordcloud",
+        "options": {
+            //fontSize: 14,
+            "style": {
+                "tooltip": {
+                    visible: true,
+                    text: '%text: %hits'
+                }
+            },
+            "words": [
+                {
+                    "text": "AI/ML Research Scientist",
+                    "count": "1"
+                },
+                {
+                    "text": "Applied Scientist",
+                    "count": "1"
+                },
+                {
+                    "text": "Applied Scientist II",
+                    "count": "1"
+                },
+                {
+                    "text": "Health Sensing ML Scientist",
+                    "count": "1"
+                },
+                {
+                    "text": "Professor",
+                    "count": "1"
+                },
+                {
+                    "text": "Postdoctoral Scientist",
+                    "count": "1"
+                },
+                {
+                    "text": "Research Data Scientist & Technical Group Lead",
+                    "count": "1"
+                },
+                {
+                    "text": "Research Scientist",
+                    "count": "1"
+                },
+                {
+                    "text": "Senior Researcher",
+                    "count": "1"
+                },
+                {
+                    "text": "Young Investigator",
+                    "count": "1"
+                }
+            ]
+        }
+    }]
+};
+
+zingchart.render({
+    id: 'phd-roles-wordcloud-2023',
+    data: phdWordcloudData2023,
+    //width: 1315,
+    output: "auto",
+    minHeight: 100,
+    maxHeight: 480,
+});

@@ -391,6 +391,98 @@ zingchart.render({
     height: '100%',
     width: '100%',
 });
+let chartDataPhD2023 = [{
+    id: 'Roles',
+    text: ' ',
+    parent: ''
+}, {
+    id: 'AI/ML Research Scientist',
+    text: 'AI/ML Research Scientist',
+    parent: 'Roles',
+    value: 1
+}, {
+    id: 'Applied Scientist',
+    text: 'Applied Scientist',
+    parent: 'Roles',
+    value: 4
+},{
+    id: 'Applied Scientist II',
+    text: 'Applied Scientist II',
+    parent: 'Roles',
+    value: 1
+}, {
+    id: 'Architect',
+    text: 'Architect',
+    parent: 'Roles',
+    value: 1
+}, {
+    id: 'Research Scientist',
+    text: 'Research Scientist',
+    parent: 'Roles',
+    value: 7
+}, {
+    id: 'Health Sensing ML Scientist',
+    text: 'Health Sensing ML Scientist',
+    parent: 'Roles',
+    value: 1
+}, {
+    id: 'Postdoctoral Scientist',
+    text: 'Postdoctoral Scientist',
+    parent: 'Roles',
+    value: 2
+}, {
+    id: 'Research Data Scientist & Technical Group Lead',
+    text: 'Research Data Scientist & Technical Group Lead',
+    parent: 'Roles',
+    value: 1
+}, {
+    id: 'Senior Researcher',
+    text: 'Senior Researcher',
+    parent: 'Roles',
+    value: 1
+}, {
+    id: 'Young Investigator',
+    text: 'Young Investigator',
+    parent: 'Roles',
+    value: 1
+}];
+
+let PhDchartConfig2023 = {
+    type: 'sunburst',
+    backgroundColor: '#fff',
+    options: {
+        sizeFactor: 0.9,
+        slice: 0,
+        space: 0,
+        root: 'Roles',
+        //widths: [30, 115, 115],
+        palette: ['#ffffff', '#fe3b1f', '#c4d600', '#ff9e1b', '#6ba539','#FEBE10','#E32636','#32de84']
+    },
+    plot: {
+        animation: {},
+        valueBox: {
+            text: '%data-vbtext',
+            color: '#000',
+            fontSize: '13px',
+            fontWeight: 400,
+            visible: null
+        },
+        tooltipText: '<span style=\'font-size:19px\'>%plot-text</span><br/>No. of Students: %node-value',
+        alpha: 1,
+    },
+    tooltip: {
+        align: 'left',
+        thousandsSeparator: ','
+    },
+    series: chartDataPhD2023,
+};
+
+zingchart.render({
+    id: 'sunburstChartPhD2023',
+    data: PhDchartConfig2023,
+    height: '100%',
+    width: '100%',
+});
 
 var fsdata = [{
     "id": "breakdown",
