@@ -192,6 +192,7 @@ let ms2023WordcloudData = {
         }
     }]
 }
+
 zingchart.render({
     id: 'ms2023-roles-wordcloud',
     data: ms2023WordcloudData,
@@ -321,3 +322,71 @@ zingchart.render({
     id: 'phd-roles-wordcloud',
     data: phdWordcloudData,
 });
+
+let ms2024WordcloudData = {
+    "graphset": [{
+        "type": "wordcloud",
+        "options": {
+            colorType: 'palette',
+            palette: ['#6ba539', '#00aec7', '#6ba539', '#00aec7', '#00aec7', '#6ba539', '#6ba539', '#00aec7', '#6ba539', '#00aec7'],
+            "style": {
+                "tooltip": {
+                    visible: false,
+                    text: '%text: %hits'
+                }
+            },
+            "words": [
+                {
+                    "text": "Senior Machine Learning Engineer",
+                    "count": "3"
+                },
+                {
+                    "text": "Machine Learning Engineer",
+                    "count": "3"
+                },
+                {
+                    "text": "Data Scientist",
+                    "count": "3"
+                },
+                {
+                    "text": "Senior Data Engineer",
+                    "count": "3"
+                },
+                {
+                    "text": "Data Engineer",
+                    "count": "3"
+                },
+                {
+                    "text": "Associate Data Engineer",
+                    "count": "3"
+                },
+                {
+                    "text": "Business Technology Associate Consultant",
+                    "count": "3"
+                },
+                {
+                    "text": "Software Development Engineer II",
+                    "count": "3"
+                },
+                {
+                    "text": "Software Engineer II",
+                    "count": "3"
+                },
+                {
+                    "text": "Software Engineering MTS",
+                    "count": "3"
+                },
+                {
+                    "text": "Software Engineer",
+                    "count": "3"
+                }
+            ]
+        }
+    }]
+}
+
+zingchart.render({
+    id: 'ms2024-roles-wordcloud',
+    data: ms2024WordcloudData,
+});
+
