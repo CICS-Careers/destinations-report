@@ -96,7 +96,7 @@ const UGRADdataKR = {
             // UMassColors.MAROON,
             // UMassColors.LIGHTGRAY
         ],
-        hoverOffset: 4
+        hoverOffset: 4 
     }]
 };
 
