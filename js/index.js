@@ -89,7 +89,7 @@ const UGRADdataKR = {
     labels: LabelsKR,
     datasets: [{
         label: ' Number of Students',
-        data: [77, 23],
+        data: [74, 26],
         backgroundColor: [
             UMassColors.LIGHTGRAY,
             UMassColors.GRAY
