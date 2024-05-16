@@ -75,7 +75,7 @@ const MSdataKR = {
     labels: LabelsKR,
     datasets: [{
         label: ' Number of Students',
-        data: [87, 13],
+        data: [80, 20],
         backgroundColor: [
             UMassColors.LIGHTGRAY,
             UMassColors.GRAY
