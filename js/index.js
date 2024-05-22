@@ -26,8 +26,8 @@ const Labels = [
     'Unknown'
 ];
 const LabelsKR = [
-    '% Known',
-    '% Unknown'
+    'Known',
+    'Unknown'
 ];
 const PhDLabels = [
     'Working in Industry',
@@ -75,7 +75,7 @@ const MSdataKR = {
     labels: LabelsKR,
     datasets: [{
         label: ' Number of Students',
-        data: [80, 20],
+        data: [209, 51],
         backgroundColor: [
             UMassColors.LIGHTGRAY,
             UMassColors.GRAY
@@ -89,7 +89,7 @@ const UGRADdataKR = {
     labels: LabelsKR,
     datasets: [{
         label: ' Number of Students',
-        data: [74, 26],
+        data: [369, 133],
         backgroundColor: [
             UMassColors.LIGHTGRAY,
             UMassColors.GRAY
