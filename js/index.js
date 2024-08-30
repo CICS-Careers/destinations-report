@@ -41,6 +41,14 @@ const PhDLabels2023 = [
     'Working'
 ];
 
+const UGradLabels2024 = [
+    'Working',
+    'Continuing Education',
+    'Still Looking',
+    'Unknown',
+    'Not Seeking'
+];
+
 const MSdata = {
     labels: Labels,
     datasets: [{
@@ -61,6 +69,21 @@ const MSdata2023 = {
     datasets: [{
         label: ' Number of Students',
         data: [199, 18, 36, 14],
+        backgroundColor: [
+            UMassColors.GREEN,
+            UMassColors.TEAL,
+            UMassColors.MAROON,
+            UMassColors.LIGHTGRAY
+        ],
+        hoverOffset: 4
+    }]
+};
+
+const MSdata2024 = {
+    labels: Labels,
+    datasets: [{
+        label: ' Number of Students',
+        data: [130, 21, 87, 13],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
@@ -137,17 +160,18 @@ const UGdata2023 = {
 };
 
 const UGdata2024 = {
-    labels: Labels,
+    labels: UGradLabels2024,
     datasets: [{
         label: ' Number of Students',
-        data: [75, 105, 87, 48],
+        data: [148, 128, 115, 70, 3],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
             UMassColors.MAROON,
-            UMassColors.LIGHTGRAY
+            UMassColors.LIGHTGRAY,
+            UMassColors.ORANGE
         ],
-        hoverOffset: 4
+        hoverOffset: 5
     }],
     legend: {
         display: false,
@@ -226,6 +250,40 @@ const configMS = {
 const configMS2023 = {
     type: 'doughnut',
     data: MSdata2023,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            },
+            datalabels: {
+                formatter: (value, ctx) => {
+                    // Uncomment this code for a percentage calculation
+                    // let sum = 0;
+                    // let dataArr = ctx.chart.data.datasets[0].data;
+                    // dataArr.map(data => {
+                    //     sum += data;
+                    // });
+                    // let percentage = (value*100 / sum).toFixed(2)+"%";
+
+                    return value + "\n" + ctx.chart.data.labels[ctx.dataIndex];
+                },
+                color: "#fff",
+                // backgroundColor: LabelBackgroundColor,
+                textAlign: "center",
+                font: {
+                    family: "'Public Sans', Arial, Helvetica, sans-serif",
+                    size: 14
+                }
+            }
+        }
+    }
+};
+
+const configMS2024 = {
+    type: 'doughnut',
+    data: MSdata2024,
     options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -510,6 +568,10 @@ const MSChart = document.getElementById('MSChart') && new Chart(
 const MSChart2023 = document.getElementById('MSChart2023') && new Chart(
     document.getElementById('MSChart2023'),
     configMS2023
+);
+const MSChart2024 = document.getElementById('MSChart2024') && new Chart(
+    document.getElementById('MSChart2024'),
+    configMS2024
 );
 
 const UGChart = document.getElementById('UGChart') && new Chart(
