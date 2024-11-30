@@ -212,6 +212,23 @@ const PhDdata2023 = {
     },
 };
 
+const PhDdata2024 = {
+    labels: PhDLabels2023,
+    datasets: [{
+        label: ' Number of Students',
+        data: [2, 5, 19],
+        backgroundColor: [
+            UMassColors.GRAY,
+            UMassColors.TEAL,
+            UMassColors.GREEN
+        ],
+        hoverOffset: 4
+    }],
+    legend: {
+        display: false,
+    },
+};
+
 
 const configMS = {
     type: 'doughnut',
@@ -553,6 +570,41 @@ const configPhD2023 = {
     }
 };
 
+
+const configPhD2024 = {
+    type: 'doughnut',
+    data: PhDdata2023,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            },
+            datalabels: {
+                formatter: (value, ctx) => {
+                    // Uncomment this code for a percentage calculation
+                    // let sum = 0;
+                    // let dataArr = ctx.chart.data.datasets[0].data;
+                    // dataArr.map(data => {
+                    //     sum += data;
+                    // });
+                    // let percentage = (value*100 / sum).toFixed(2)+"%";
+
+                    return value + "\n" + ctx.chart.data.labels[ctx.dataIndex];
+                },
+                color: "#fff",
+                // backgroundColor: LabelBackgroundColor,
+                textAlign: "center",
+                font: {
+                    family: "'Public Sans', Arial, Helvetica, sans-serif",
+                    size: 14
+                }
+            }
+        }
+    }
+};
+
 const PhDChart = document.getElementById('PhDChart') && new Chart(
     document.getElementById('PhDChart'),
     configPhD
@@ -560,6 +612,10 @@ const PhDChart = document.getElementById('PhDChart') && new Chart(
 const PhDChart2023 = document.getElementById('PhDChart2023') && new Chart(
     document.getElementById('PhDChart2023'),
     configPhD2023
+);
+const PhDChart2024 = document.getElementById('PhDChart2024') && new Chart(
+    document.getElementById('PhDChart2024'),
+    configPhD2024
 );
 const MSChart = document.getElementById('MSChart') && new Chart(
     document.getElementById('MSChart'),
