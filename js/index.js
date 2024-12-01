@@ -573,7 +573,7 @@ const configPhD2023 = {
 
 const configPhD2024 = {
     type: 'doughnut',
-    data: PhDdata2023,
+    data: PhDdata2024,
     options: {
         responsive: true,
         maintainAspectRatio: false,

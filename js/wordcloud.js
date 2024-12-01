@@ -456,3 +456,53 @@ zingchart.render({
     data: ms2024WordcloudData,
 });
 
+let phdWordcloudData2024 = {
+    "graphset": [{
+        "type": "wordcloud",
+        "options": {
+            //fontSize: 14,
+            "style": {
+                "tooltip": {
+                    visible: true,
+                    text: '%text: %hits'
+                }
+            },
+            "words": [
+                {
+                    "text": "Research Scientist",
+                    "count": "1"
+                },
+                {
+                    "text": "Applied Research Scientist",
+                    "count": "1"
+                },
+                {
+                    "text": "Assistant Professor",
+                    "count": "1"
+                },
+                {
+                    "text": "ML Research Scientist",
+                    "count": "1"
+                },
+                {
+                    "text": "Research Engineer",
+                    "count": "1"
+                },
+                {
+                    "text": "Research Scientist",
+                    "count": "11"
+                },
+                {
+                    "text": "Senior Researcher",
+                    "count": "1"
+                },
+                {
+                    "text": "Tenure-track assistant professor",
+                    "count": "1"
+                }
+            ]
+        }
+    }]
+};
+
+
