@@ -505,4 +505,13 @@ let phdWordcloudData2024 = {
     }]
 };
 
+zingchart.render({
+    id: 'phd-roles-wordcloud-2024',
+    data: phdWordcloudData2023,
+    //width: 1315,
+    output: "auto",
+    minHeight: 100,
+    maxHeight: 480,
+});
+
 
