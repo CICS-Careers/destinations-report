@@ -490,7 +490,7 @@ let phdWordcloudData2024 = {
                 },
                 {
                     "text": "Research Scientist",
-                    "count": "11"
+                    "count": "1"
                 },
                 {
                     "text": "Senior Researcher",
