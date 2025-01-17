@@ -163,7 +163,7 @@ const UGdata2024 = {
     labels: UGradLabels2024,
     datasets: [{
         label: ' Number of Students',
-        data: [173, 145, 93, 56, 4],
+        data: [153, 131, 114, 68, 4],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
