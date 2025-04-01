@@ -22,7 +22,7 @@ const LabelBackgroundColor = 'rgba(0, 0, 0, 0.2)';
 const Labels = [
     'Working',
     'Continuing Education',
-    'Still Looking',
+    'Looking',
     'Unknown'
 ];
 const LabelsKR = [
