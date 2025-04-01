@@ -44,7 +44,7 @@ const PhDLabels2023 = [
 const UGradLabels2024 = [
     'Working',
     'Continuing Education',
-    'Still Looking',
+    'Looking',
     'Unknown',
     'Not Seeking'
 ];
