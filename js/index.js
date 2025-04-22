@@ -94,6 +94,20 @@ const MSdata2024 = {
     }]
 };
 
+const MSdata2025 = {
+    labels: Labels,
+    datasets: [{
+        label: ' Number of Students',
+        data: [26, 4, 34, 5],
+        backgroundColor: [
+            UMassColors.GREEN,
+            UMassColors.TEAL,
+            UMassColors.MAROON,
+            UMassColors.LIGHTGRAY
+        ],
+        hoverOffset: 4
+    }]
+};
 const MSdataKR = {
     labels: LabelsKR,
     datasets: [{
@@ -301,6 +315,40 @@ const configMS2023 = {
 const configMS2024 = {
     type: 'doughnut',
     data: MSdata2024,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            },
+            datalabels: {
+                formatter: (value, ctx) => {
+                    // Uncomment this code for a percentage calculation
+                    // let sum = 0;
+                    // let dataArr = ctx.chart.data.datasets[0].data;
+                    // dataArr.map(data => {
+                    //     sum += data;
+                    // });
+                    // let percentage = (value*100 / sum).toFixed(2)+"%";
+
+                    return value + "\n" + ctx.chart.data.labels[ctx.dataIndex];
+                },
+                color: "#fff",
+                // backgroundColor: LabelBackgroundColor,
+                textAlign: "center",
+                font: {
+                    family: "'Public Sans', Arial, Helvetica, sans-serif",
+                    size: 14
+                }
+            }
+        }
+    }
+};
+
+const configMS2025 = {
+    type: 'doughnut',
+    data: MSdata2025,
     options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -629,6 +677,11 @@ const MSChart2024 = document.getElementById('MSChart2024') && new Chart(
     document.getElementById('MSChart2024'),
     configMS2024
 );
+const MSChart2025 = document.getElementById('MSChart2025') && new Chart(
+    document.getElementById('MSChart2025'),
+    configMS2025
+);
+
 
 const UGChart = document.getElementById('UGChart') && new Chart(
     document.getElementById('UGChart'),
