@@ -98,7 +98,7 @@ const MSdata2025 = {
     labels: Labels,
     datasets: [{
         label: ' Number of Students',
-        data: [26, 4, 34, 5],
+        data: [26, 4, 36, 3],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
@@ -178,6 +178,25 @@ const UGdata2024 = {
     datasets: [{
         label: ' Number of Students',
         data: [153, 131, 114, 68, 4],
+        backgroundColor: [
+            UMassColors.GREEN,
+            UMassColors.TEAL,
+            UMassColors.MAROON,
+            UMassColors.LIGHTGRAY,
+            UMassColors.ORANGE
+        ],
+        hoverOffset: 5
+    }],
+    legend: {
+        display: false,
+    },
+};
+
+const UGdata2025 = {
+    labels: UGradLabels2024,
+    datasets: [{
+        label: ' Number of Students',
+        data: [42, 32, 37, 33, 1],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
@@ -550,6 +569,40 @@ const configUG2024 = {
     }
 };
 
+const configUG2025 = {
+    type: 'doughnut',
+    data: UGdata2025,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            },
+            datalabels: {
+                formatter: (value, ctx) => {
+                    // Uncomment this code for a percentage calculation
+                    // let sum = 0;
+                    // let dataArr = ctx.chart.data.datasets[0].data;
+                    // dataArr.map(data => {
+                    //     sum += data;
+                    // });
+                    // let percentage = (value*100 / sum).toFixed(2)+"%";
+
+                    return value + "\n" + ctx.chart.data.labels[ctx.dataIndex];
+                },
+                color: "#fff",
+                // backgroundColor: LabelBackgroundColor,
+                textAlign: "center",
+                font: {
+                    family: "'Public Sans', Arial, Helvetica, sans-serif",
+                    size: 14
+                }
+            }
+        }
+    }
+};
+
 const configPhD = {
     type: 'doughnut',
     data: PhDdata,
@@ -695,6 +748,11 @@ const UGChart2023 = document.getElementById('UGChart2023') && new Chart(
 const UGChart2024 = document.getElementById('UGChart2024') && new Chart(
     document.getElementById('UGChart2024'),
     configUG2024
+);
+
+const UGChart2025 = document.getElementById('UGChart2024') && new Chart(
+    document.getElementById('UGChart2024'),
+    configUG2025
 );
 
 const MSChartKR = document.getElementById('MSChartKR') && new Chart(
