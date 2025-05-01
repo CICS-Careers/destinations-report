@@ -750,8 +750,8 @@ const UGChart2024 = document.getElementById('UGChart2024') && new Chart(
     configUG2024
 );
 
-const UGChart2025 = document.getElementById('UGChart2024') && new Chart(
-    document.getElementById('UGChart2024'),
+const UGChart2025 = document.getElementById('UGChart2025') && new Chart(
+    document.getElementById('UGChart2025'),
     configUG2025
 );
 
