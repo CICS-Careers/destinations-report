@@ -456,6 +456,98 @@ zingchart.render({
     data: ms2024WordcloudData,
 });
 
+
+let ms2025WordcloudData = {
+    "graphset": [{
+        "type": "wordcloud",
+        "options": {
+            colorType: 'palette',
+            palette: ['#6ba539', '#00aec7', '#6ba539', '#00aec7', '#00aec7', '#6ba539', '#6ba539', '#00aec7', '#6ba539', '#00aec7'],
+            "style": {
+                "tooltip": {
+                    visible: false,
+                    text: '%text: %hits'
+                }
+            },
+            "words": [
+                {
+                    "text": "AI Software Engineer ",
+                    "count": "3"
+                },
+                {
+                    "text": "Software Development Engineer",
+                    "count": "3"
+                },
+                {
+                    "text": "Senior Software Engineer",
+                    "count": "3"
+                },
+                {
+                    "text": "Senior Software Developer",
+                    "count": "3"
+                },
+                {
+                    "text": "Senior Associate Applied AI/ML Engineer",
+                    "count": "3"
+                },
+                {
+                    "text": "Software Developer",
+                    "count": "3"
+                },
+                {
+                    "text": "Computer Science Teacher",
+                    "count": "3"
+                },
+                {
+                    "text": "Data Scientist",
+                    "count": "3"
+                },
+                {
+                    "text": "Quantitative Strategist",
+                    "count": "3"
+                },
+                {
+                    "text": "Applied Scientist I",
+                    "count": "3"
+                },
+                {
+                    "text": "Machine Learning Engineer",
+                    "count": "3"
+                },
+                {
+                    "text": "Full Stack Developer",
+                    "count": "3"
+                },
+                {
+                    "text": "Cloud Technical Solutions Engineer",
+                    "count": "3"
+                },
+                {
+                    "text": "Machine Learning Researcher",
+                    "count": "3"
+                },
+                {
+                    "text": "Platform Engineer",
+                    "count": "3"
+                },
+                {
+                    "text": "Security Researcher",
+                    "count": "3"
+                },
+                {
+                    "text": "Research And Development Engineer",
+                    "count": "3"
+                }
+            ]
+        }
+    }]
+}
+
+zingchart.render({
+    id: 'ms2025-roles-wordcloud',
+    data: ms2025WordcloudData,
+});
+
 let phdWordcloudData2024 = {
     "graphset": [{
         "type": "wordcloud",
