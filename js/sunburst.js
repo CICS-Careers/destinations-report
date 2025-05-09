@@ -568,3 +568,160 @@ var cdata2023 = {
     output: 'svg',
     data: cdata2023
   });
+
+
+
+
+let chartMSData2025 = [{
+    id: 'Industries',
+    text: ' ',
+    parent: ''
+}, {
+    id: 'Software',
+    text: 'Software',
+    parent: 'Industries',
+    value: 8
+}, {
+    id: 'Data',
+    text: 'Data',
+    parent: 'Industries',
+    value: 3
+}, {
+    id: 'Machine Learning',
+    text: 'Machine Learning',
+    parent: 'Industries',
+    value: 5
+},{
+    id: 'Academics',
+    text: 'Academics',
+    parent: 'Industries',
+    value: 1
+},{
+    id: 'Computer Science Teacher',
+    text: 'Computer Science Teacher',
+    parent: 'Academics',
+    value: 1
+},
+{
+    id: 'AI SWE',
+    text: 'AI Software Engineer ',
+    parent: 'Machine Learning',
+    value: 1
+}, {
+    id: 'Software Development Engineer',
+    text: 'Software Development Engineer',
+    parent: 'Software',
+    value: 1
+}, {
+    id: 'Senior Software Engineer',
+    text: 'Senior Software Engineer',
+    parent: 'Software',
+    value: 1
+},{
+    id: 'Senior Software Developer',
+    text: 'Senior Software Developer',
+    parent: 'Software',
+    value: 1
+}, {
+    id: 'Software Developer',
+    text: 'Software Developer',
+    parent: 'Software',
+    value: 1
+},  {
+    id: 'Cloud Technical Solutions Engineer',
+    text: 'Cloud Technical Solutions Engineer',
+    parent: 'Software',
+    value: 1
+},  {
+    id: 'Platform Engineer',
+    text: 'Platform Engineer',
+    parent: 'Software',
+    value: 1
+},  {
+    id: 'Security Researcher',
+    text: 'Security Researcher',
+    parent: 'Software',
+    value: 1
+}, {
+    id: 'Full Stack Developer',
+    text: 'Full Stack Developer',
+    parent: 'Software',
+    value: 1
+}, {
+    id: 'Data Scientist',
+    text: 'Data Scientist',
+    parent: 'Data',
+    value: 1
+}, {
+    id: 'Quantitative Strategist',
+    text: 'Quantitative Strategist',
+    parent: 'Data',
+    value: 1
+},  {
+    id: 'Applied Scientist I',
+    text: 'Applied Scientist I',
+    parent: 'Data',
+    value: 1
+},  {
+    id: 'Senior Associate Applied AI/ML Engineer',
+    text: 'Senior Associate Applied AI/ML Engineer',
+    parent: 'Machine Learning',
+    value: 1
+},{
+    id: 'Machine Learning Engineer',
+    text: 'Machine Learning Engineer',
+    parent: 'Machine Learning',
+    value: 1
+},
+{
+    id: 'Machine Learning Researcher',
+    text: 'Machine Learning Researcher',
+    parent: 'Machine Learning',
+    value: 1
+},{
+    id: 'Research And Development Engineer',
+    text: 'Research And Development Engineer',
+    parent: 'Machine Learning',
+    value: 1
+},
+];
+// full ZingChart schema can be found here:
+// https://www.zingchart.com/docs/api/json-configuration/
+let MSchartConfig2025 = {
+    type: 'sunburst',
+    backgroundColor: '#fff',
+    options: {
+        sizeFactor: 0.9,
+        slice: 1,
+        space: 0,
+        root: 'Industries',
+        // widths: [5, 100, 130],
+        //palette: ['#ffffff', '#3F51B5', '#42A5F5', '#5C6BC0', '#64B5F6']
+        palette: ['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1', '#955251', '#B565A7', '#009B77', '#DD4124', '#45B8AC']
+
+    },
+    plot: {
+        animation: {},
+        valueBox: {
+            text: '%data-vbtext',
+            color: '#fff',
+            fontSize: '13px',
+            fontWeight: 400,
+            visible: null
+        },
+        tooltipText: '<span style=\'font-size:19px\'>%plot-text</span><br/>No. of Students: %node-value',
+        alpha: 1,
+    },
+    tooltip: {
+        align: 'left',
+        thousandsSeparator: ','
+    },
+    series: chartMSData2025,
+};
+
+zingchart.render({
+    id: 'sunburstChartMS2025',
+    data: MSchartConfig2025,
+    height: '100%',
+    width: '100%'
+});
