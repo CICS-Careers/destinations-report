@@ -14,7 +14,7 @@ const UMassColors = {
     TEAL: 'rgb(0, 174, 199)',
     GREEN: 'rgb(46,139,87)',
     DARKORANGE: '#cb6015',
-    GRAY:"#808080"
+    GRAY: "#808080"
 }
 
 const LabelBackgroundColor = 'rgba(0, 0, 0, 0.2)';
@@ -133,7 +133,7 @@ const UGRADdataKR = {
             // UMassColors.MAROON,
             // UMassColors.LIGHTGRAY
         ],
-        hoverOffset: 4 
+        hoverOffset: 4
     }]
 };
 
@@ -196,7 +196,7 @@ const UGdata2025 = {
     labels: UGradLabels2024,
     datasets: [{
         label: ' Number of Students',
-        data: [47, 32, 36,29, 1],
+        data: [47, 32, 36, 29, 1],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
@@ -215,7 +215,7 @@ const PhDdata = {
     labels: PhDLabels,
     datasets: [{
         label: ' Number of Students',
-        data: [17, 8,2],
+        data: [17, 8, 2],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
@@ -651,7 +651,7 @@ const configPhD = {
             }
         }
     }
-}; 
+};
 
 const configPhD2023 = {
     type: 'doughnut',
@@ -844,7 +844,7 @@ window.addEventListener("load", (e) => {
 
     window.top.postMessage(message, "*");
 
-    $(".nav-link").on("click", function(e) {
+    $(".nav-link").on("click", function (e) {
         e.preventDefault();
         // returns "undergraduate" from "https://destinations.ltseng.me/#undergraduate"
         window.top.postMessage({
