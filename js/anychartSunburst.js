@@ -83,7 +83,7 @@ anychart.onDocumentReady(function () {
           ]
         },
         {
-          name: "Fin-Tech",
+          name: "FinTech",
           children: [
             { name: "Technology Development Associate" },
             { name: "Investment Banking Analyst" },
