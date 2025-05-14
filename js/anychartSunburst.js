@@ -28,7 +28,7 @@ anychart.onDocumentReady(function () {
             // { name: "Senior Software Engineer" },
             // { name: "Senior Software Developer" },
             // { name: "Software Developer" },
-            { name: "Cloud Technical Solutions Engineer" },
+            { name: "Cloud Solutions Engineer" },
             { name: "Platform Engineer" },
             { name: "Security Researcher" },
             { name: "Full Stack Developer" }
@@ -43,12 +43,12 @@ anychart.onDocumentReady(function () {
           ]
         },
         {
-          name: "Machine Learning",
+          name: "AI",
           children: [
             // { name: "AI Software Engineer" },
             { name: "Applied AI/ML Engineer" },
-            { name: "Machine Learning Engineer" },
-            { name: "Machine Learning Researcher" },
+            { name: "ML Engineer" },
+            { name: "ML Researcher" },
             // { name: "Research And Development Engineer" }
           ]
         },
