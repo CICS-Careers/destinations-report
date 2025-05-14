@@ -2,7 +2,7 @@ ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768
 anychart.onDocumentReady(function () {
   function createSunburstChart(containerId, chartData) {
     // var palette1 = ['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1'];
-    var palette2 = ['#955251', '#B565A7', '#92A8D1','#009B77', '#DD4324', '#45B8AC','#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9'];
+    var palette2 = ['#955251', '#B565A7', '#92A8D1', '#009B77', '#DD4324', '#45B8AC', '#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9'];
 
     var chart = anychart.sunburst(chartData, "as-tree");
     chart.calculationMode("ordinal-from-leaves");
@@ -63,7 +63,7 @@ anychart.onDocumentReady(function () {
   ];
 
 
-var rolesDataUG2025 = [
+  var rolesDataUG2025 = [
     {
       name: "Roles",
       children: [
@@ -88,7 +88,9 @@ var rolesDataUG2025 = [
           name: "Data",
           children: [
             { name: "Data Analyst" },
-            { name: "Data Engineer" }
+            { name: "Data Engineer" },
+            { name: "Investment Banking Analyst" },
+            { name: "Quantitative Systems Analyst" }
           ]
         },
         {
@@ -105,10 +107,9 @@ var rolesDataUG2025 = [
             { name: "Product Manager" },
             // { name: "Technology Analytics Analyst" },
             // { name: "Analyst" },
-            { name: "Technical Business Analyst " },
+            { name: "Technical Business Analyst " }
             // { name: "Prime Brokerage Analyst" },
-            { name: "Investment Banking Analyst" },
-            { name: "Quantitative Systems Analyst" }
+
           ]
         }
       ]
