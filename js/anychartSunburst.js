@@ -25,9 +25,9 @@ anychart.onDocumentReady(function () {
           name: "Software",
           children: [
             { name: "Software Development Engineer" },
-            { name: "Senior Software Engineer" },
-            { name: "Senior Software Developer" },
-            { name: "Software Developer" },
+            // { name: "Senior Software Engineer" },
+            // { name: "Senior Software Developer" },
+            // { name: "Software Developer" },
             { name: "Cloud Technical Solutions Engineer" },
             { name: "Platform Engineer" },
             { name: "Security Researcher" },

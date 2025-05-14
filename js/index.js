@@ -23,7 +23,8 @@ const Labels = [
     'Working',
     'Continuing Education',
     'Looking',
-    'Unknown'
+    'Unknown',
+    'Not Seeking'
 ];
 const LabelsKR = [
     'Known',
@@ -98,12 +99,13 @@ const MSdata2025 = {
     labels: Labels,
     datasets: [{
         label: ' Number of Students',
-        data: [31, 4, 31, 3],
+        data: [32, 3, 30, 3, 1],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
             UMassColors.MAROON,
-            UMassColors.LIGHTGRAY
+            UMassColors.LIGHTGRAY,
+            UMassColors.ORANGE
         ],
         hoverOffset: 4
     }]
@@ -196,7 +198,7 @@ const UGdata2025 = {
     labels: UGradLabels2024,
     datasets: [{
         label: ' Number of Students',
-        data: [47, 32, 36, 29, 1],
+        data: [48, 32, 36, 29, 1],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
@@ -393,24 +395,25 @@ const configMS2025 = {
             },
             datalabels: {
                 formatter: (value, ctx) => {
-                    // Uncomment this code for a percentage calculation
-                    // let sum = 0;
-                    // let dataArr = ctx.chart.data.datasets[0].data;
-                    // dataArr.map(data => {
-                    //     sum += data;
-                    // });
-                    // let percentage = (value*100 / sum).toFixed(2)+"%";
-
                     return value + "\n" + ctx.chart.data.labels[ctx.dataIndex];
                 },
-                color: "#fff",
-                // backgroundColor: LabelBackgroundColor,
+                color: "#fff", // adjust if needed
                 textAlign: "center",
                 font: {
                     family: "'Public Sans', Arial, Helvetica, sans-serif",
                     size: 14
-                }
+                },
+                anchor: 'center', // keep labels inside arcs
+                align: (ctx) => {
+                    const index = ctx.dataIndex;
+                    const total = ctx.chart.data.labels.length;
+                    if (index === total - 1) return 'top';        // last label on top
+                    if (index === total - 2) return 'bottom';     // second last label on bottom
+                    return 'center'; // default alignment for the rest
+                },
+                offset: 4
             }
+
         }
     }
 };
