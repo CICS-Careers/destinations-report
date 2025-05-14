@@ -63,35 +63,25 @@ anychart.onDocumentReady(function () {
   ];
 
 
-  var rolesDataUG2025 = [
+var rolesDataUG2025 = [
     {
       name: "Roles",
       children: [
         {
           name: "Software",
           children: [
-            { name: "Software Reverse Engineer" },
+            // { name: "Software Reverse Engineer" },
             { name: "Software Engineer" },
-            { name: "Software Development Engineer" },
-            { name: "Software Developer" },
+            // { name: "Software Development Engineer" },
+            // { name: "Software Developer" },
             { name: "Embedded Software Engineer" },
-            { name: "React Native Developer" },
-            { name: "Security Engineer" },
+            // { name: "React Native Developer" },
+            // { name: "Security Engineer" },
             { name: "Cyber Security Engineer" },
-            { name: "Associate Network and Security Engineer" },
-            { name: "Cloud Engineer" }
-          ]
-        },
-        {
-          name: "FinTech",
-          children: [
-            { name: "Technology Development Associate" },
-            { name: "Investment Banking Analyst" },
-            { name: "Quantitative Systems Analyst" },
-            { name: "Prime Brokerage Analyst" },
-            { name: "Technology Analytics Analyst" },
-            { name: "Technical Business Analyst " },
-            { name: "Analyst" }
+            { name: "Network & Security Engineer" },
+            { name: "Cloud Engineer" },
+            { name: "Infrastructure as Code Engineer" }
+            // { name: "Technology Development Associate" },
           ]
         },
         {
@@ -101,31 +91,29 @@ anychart.onDocumentReady(function () {
             { name: "Data Engineer" }
           ]
         },
-
         {
-          name: "Machine Learning",
+          name: "AI",
           children: [
             { name: "AI Engineer" },
-            { name: "Machine Learning Engineer" },
+            { name: "ML Engineer" },
             { name: "Research Associate" }
-          ]
-        },
-        {
-          name: "Academics",
-          children: [
-            { name: "Infrastructure as Code Engineer" }
           ]
         },
         {
           name: "Product",
           children: [
-            { name: "Product Manager" }
+            { name: "Product Manager" },
+            // { name: "Technology Analytics Analyst" },
+            // { name: "Analyst" },
+            { name: "Technical Business Analyst " },
+            // { name: "Prime Brokerage Analyst" },
+            { name: "Investment Banking Analyst" },
+            { name: "Quantitative Systems Analyst" }
           ]
         }
       ]
     }
   ];
-
   // Create both charts with the same data but in different containers
   createSunburstChart("chartContainer1", rolesDataUG2025);
   createSunburstChart("chartContainer2", rolesDataMS2025);
