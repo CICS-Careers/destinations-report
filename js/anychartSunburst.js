@@ -45,19 +45,19 @@ anychart.onDocumentReady(function () {
         {
           name: "Machine Learning",
           children: [
-            { name: "AI Software Engineer" },
-            { name: "Senior Associate Applied AI/ML Engineer" },
+            // { name: "AI Software Engineer" },
+            { name: "Applied AI/ML Engineer" },
             { name: "Machine Learning Engineer" },
             { name: "Machine Learning Researcher" },
-            { name: "Research And Development Engineer" }
+            // { name: "Research And Development Engineer" }
           ]
         },
-        {
-          name: "Academics",
-          children: [
-            { name: "Computer Science Teacher" }
-          ]
-        }
+        // {
+        //   name: "Academics",
+        //   children: [
+        //     { name: "Computer Science Teacher" }
+        //   ]
+        // }
       ]
     }
   ];
