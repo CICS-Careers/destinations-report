@@ -99,7 +99,7 @@ const MSdata2025 = {
     labels: Labels,
     datasets: [{
         label: ' Number of Students',
-        data: [138, 9, 143, 36, 4],
+        data: [135, 9, 145, 37, 4],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
