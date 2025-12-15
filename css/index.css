@@ -170,3 +170,78 @@ div.popular-roles-wrap{
 .kr-chart{
   margin: auto;
 }
+
+
+/* Horizontal scrolling logos */
+.scroll-row {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    padding-bottom: 10px;
+}
+
+/* Optional: smoother scroll */
+.scroll-row {
+    scroll-behavior: smooth;
+}
+
+/* Optional: cleaner scrollbar */
+.scroll-row::-webkit-scrollbar {
+    height: 6px;
+}
+
+.scroll-row::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+
+/* Horizontal scrolling container */
+.logo-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    padding: 0 40px;
+}
+
+/* Keep logos in one line */
+.logo-scroll .row {
+    flex-wrap: nowrap;
+}
+
+/* Hide scrollbar (optional, cleaner) */
+.logo-scroll::-webkit-scrollbar {
+    display: none;
+}
+.logo-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Arrow buttons */
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: 1px solid #ddd;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.scroll-btn.left {
+    left: 0;
+    /* display: none; */
+}
+
+.scroll-btn.right {
+    right: 0;
+}
+
+.scroll-btn:hover {
+    background-color: #f8f9fa;
+}
