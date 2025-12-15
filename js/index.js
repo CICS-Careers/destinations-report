@@ -866,4 +866,118 @@ window.addEventListener("message", (e) => {
     }
 })
 
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".logo-scroll-wrapper").forEach(wrapper => {
+    const scrollContainer = wrapper.querySelector(".logo-scroll");
+    const row = scrollContainer.querySelector(".row");
+    const leftBtn = wrapper.querySelector(".scroll-btn.left");
+    const rightBtn = wrapper.querySelector(".scroll-btn.right");
 
+    if (!scrollContainer || !row) return;
+
+    /* ---------- CONFIG ---------- */
+    const AUTO_SCROLL_SPEED = 1;
+    const AUTO_SCROLL_INTERVAL = 20;
+    const CLICK_SCROLL_AMOUNT = 450;
+    const PAUSE_AFTER_CLICK = 2500;
+    /* ---------------------------- */
+
+    // 🔁 DUPLICATE CONTENT (triple for seamless loop)
+    const originalContent = row.innerHTML;
+    row.innerHTML = originalContent + originalContent + originalContent;
+
+    let autoScrollTimer = null;
+    let resumeTimeout = null;
+    let isUserScrolling = false;
+    const sectionWidth = row.scrollWidth / 3;
+
+    // Start in middle section
+    scrollContainer.scrollLeft = sectionWidth;
+
+    function checkAndResetPosition() {
+      // Only reset if we're auto-scrolling (not during user interaction)
+      if (isUserScrolling) return;
+      
+      const currentScroll = scrollContainer.scrollLeft;
+      
+      // If we've scrolled past 2/3, reset to 1/3
+      if (currentScroll >= sectionWidth * 2) {
+        scrollContainer.scrollLeft = sectionWidth;
+      }
+      // If we've scrolled before 1/3 (going backwards), reset to 2/3
+      else if (currentScroll <= 0) {
+        scrollContainer.scrollLeft = sectionWidth * 2;
+      }
+    }
+
+    function startAutoScroll() {
+      stopAutoScroll();
+      isUserScrolling = false;
+      
+      autoScrollTimer = setInterval(() => {
+        scrollContainer.scrollLeft += AUTO_SCROLL_SPEED;
+        checkAndResetPosition();
+      }, AUTO_SCROLL_INTERVAL);
+    }
+
+    function stopAutoScroll() {
+      clearInterval(autoScrollTimer);
+      autoScrollTimer = null;
+    }
+
+    function pauseAndResume() {
+      stopAutoScroll();
+      isUserScrolling = true;
+      clearTimeout(resumeTimeout);
+      
+      resumeTimeout = setTimeout(() => {
+        isUserScrolling = false;
+        // Reset position if needed before resuming
+        checkAndResetPosition();
+        startAutoScroll();
+      }, PAUSE_AFTER_CLICK);
+    }
+
+    // Arrow controls
+    leftBtn.addEventListener("click", () => {
+      pauseAndResume();
+      scrollContainer.scrollBy({
+        left: -CLICK_SCROLL_AMOUNT,
+        behavior: "smooth"
+      });
+    });
+
+    rightBtn.addEventListener("click", () => {
+      pauseAndResume();
+      scrollContainer.scrollBy({
+        left: CLICK_SCROLL_AMOUNT,
+        behavior: "smooth"
+      });
+    });
+
+    // Hover pause
+    scrollContainer.addEventListener("mouseenter", () => {
+      stopAutoScroll();
+      isUserScrolling = true;
+    });
+    
+    scrollContainer.addEventListener("mouseleave", () => {
+      isUserScrolling = false;
+      checkAndResetPosition();
+      startAutoScroll();
+    });
+
+    // Handle scroll end (for smooth scroll from buttons)
+    let scrollTimeout;
+    scrollContainer.addEventListener("scroll", () => {
+      if (!isUserScrolling) return;
+      
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        checkAndResetPosition();
+      }, 150);
+    });
+
+    startAutoScroll();
+  });
+});
