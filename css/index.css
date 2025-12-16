@@ -50,18 +50,29 @@ div.small-padded-section {
     font-size: 15px;
 }
 
-/* Navigation Tabs */
-/* Sets the colors of the navigation tabs */
-.nav-pills > li > button.active, .nav-pills > .dropdown > ul > li > a.active {
-    background-color: #6c757d !important;
+/* Navigation Tabs - Force Grey Override */
+
+/* Navigation Tabs - Force Screenshot Grey */
+
+/* 1. ACTIVE Tab (Selected - The Dark Grey from your image) */
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    background-color: #6c757d !important; /* Specific Slate Grey */
+    border-color: #6c757d !important;
+    color: white !important;
 }
 
-.nav-pills > li > button:not(.active), .nav-pills > li > a:not(.active) {
-    color: #6c757d !important;
+/* 2. INACTIVE Tabs (Not Selected) */
+.nav-pills .nav-link {
+    color: #6c757d !important; /* Grey text */
+    background-color: transparent !important; /* No background */
+    margin-right: 5px;
 }
 
-.nav-pills > li > button:hover:not(.active) {
-    color: #8f9ba6 !important;
+/* 3. HOVER Effect (Optional - Light Grey when hovering) */
+.nav-pills .nav-link:hover:not(.active) {
+    background-color: #e2e6ea !important; 
+    color: #495057 !important;
 }
 
 @media screen and (max-width: 576px) {

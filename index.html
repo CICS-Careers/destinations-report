@@ -18,6 +18,8 @@
     <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
     <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
     <script src="https://cdn.anychart.com/releases/v8/js/anychart-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </head>
 
@@ -28,20 +30,33 @@
         <nav class="my-3">
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-ugrad-tab" data-bs-toggle="pill"
-                        data-bs-target="#pills-ugrad" type="button" role="tab" aria-controls="pills-ugrad"
-                        aria-selected="true">Undergraduate
-                    </button>
+                    <a class="nav-link active"
+                        id="pills-ugrad-tab"
+                        data-bs-toggle="pill"
+                        href="#pills-ugrad"
+                        role="tab"
+                        aria-selected="true">
+                        Undergraduate
+                        </a>
+
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-ms-tab" data-bs-toggle="pill" data-bs-target="#pills-ms"
-                        type="button" role="tab" aria-controls="pills-ms" aria-selected="false">Master's
-                    </button>
+                    <a class="nav-link"
+                    id="pills-ms-tab"
+                    data-bs-toggle="pill"
+                    href="#pills-ms"
+                    role="tab">
+                    Master's
+                    </a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-phd-tab" data-bs-toggle="pill" data-bs-target="#pills-phd"
-                        type="button" role="tab" aria-controls="pills-phd" aria-selected="false">PhD
-                    </button>
+                    <a class="nav-link"
+                        id="pills-phd-tab"
+                        data-bs-toggle="pill"
+                        href="#pills-phd"
+                        role="tab">
+                        PhD
+                        </a>
                 </li>
 
                 <!-- Dropdown Year Selector -->
@@ -73,8 +88,7 @@
         </div>
 
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-ugrad" role="tabpanel" aria-labelledby="pills-ugrad-tab"
-                tabindex="0">
+            <div class="tab-pane fade show active" id="pills-ugrad" role="tabpanel" aria-labelledby="pills-ugrad-tab"tabindex="0">
                 <div id="undergraduate" class="padded-section">
                     <div class="small-padded-section text-center">
                         <h1>Manning CICS Undergraduates</h1>
@@ -179,27 +193,6 @@
                         </div>
                     </div>
 
-                    <!-- Undergraduate Callout Cells for Median Salary and Satisfaction Rate -->
-                    <!-- <div class="padded-section text-center">
-                    <div class="row callout-cell-row">
-                        <div class="col-12 offset-md-2 col-md-4 offset-lg-3 col-lg-3 callout-cell-container">
-                            <div class="callout-cell">
-                                <h6><i class="fa-regular fa-sack-dollar"></i> Median Salary<sup
-                                        class="text-secondary">4</sup>
-                                </h6>
-                                <h1 class="mb-0">$90,000</h1>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4 col-lg-3 callout-cell-container">
-                            <div class="callout-cell">
-                                <h6><i class="fa-regular fa-face-smile"></i> Satisfaction Rate<sup
-                                        class="text-secondary">5</sup>
-                                </h6>
-                                <h1 class="mb-0">95%</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
 
                     <!-- Employers -->
                     <div class="padded-section">
@@ -422,11 +415,6 @@
                         <div id="chartContainer1" class="chart--container"></div>
                     </div>
 
-                    <!-- Industries -->
-                    <!-- <div class="padded-section text-center">
-                    <h3>Industries Breakdown</h3>
-                    <div id="sunburstChartUG" class="chart--container"></div>
-                </div> -->
 
                     <!-- Advanced Degrees -->
                     <div class="padded-section">
@@ -656,6 +644,7 @@
                     </div>
 
                 </div>
+            </div>
             </div>
             <div class="tab-pane fade" id="pills-ms" role="tabpanel" aria-labelledby="pills-ms-tab" tabindex="0">
                 <div id="masters" class="padded-section">

@@ -831,15 +831,11 @@ const headlines = [
 
 ]
 
-// https://www.geeksforgeeks.org/how-to-adjust-the-width-and-height-of-iframe-to-fit-with-content-in-it/
-// https://stackoverflow.com/questions/9153445/how-to-communicate-between-iframe-and-the-parent-site
-// http://shorts.jeffkreeftmeijer.com/2014/scroll-to-anchors-in-iframes/#anchor-5
-window.addEventListener("load", (e) => {
-    // if (e.origin !== "https://www.cics.umass.edu") {
-    //     console.log("DEBUG: Website is not https://www.cics.umass.edu, so not posting message.");
-    //     return;
-    // }
 
+// --- START OF FIXED LOGIC AT THE BOTTOM OF THE FILE ---
+
+// Window Load Event for Navigation Messages
+window.addEventListener("load", (e) => {
     const message = {
         height: window.document.body.scrollHeight,
         width: window.document.body.scrollWidth
@@ -847,12 +843,18 @@ window.addEventListener("load", (e) => {
 
     window.top.postMessage(message, "*");
 
+    // FIXED CLICK HANDLER
     $(".nav-link").on("click", function (e) {
-        e.preventDefault();
-        // returns "undergraduate" from "https://destinations.ltseng.me/#undergraduate"
-        window.top.postMessage({
-            "setAnchor": $(this).attr('href').split('/').pop().substring(1)
-        }, "*")
+        // Only prevent default if it is a real link (has href), like the dropdowns.
+        // If it's a Tab Button (no href), let Bootstrap handle the switch.
+        const href = $(this).attr('href');
+        
+        if (href && href !== "#") {
+            e.preventDefault();
+            window.top.postMessage({
+                "setAnchor": href.split('/').pop().substring(1)
+            }, "*")
+        }
     });
 });
 
@@ -860,20 +862,27 @@ window.addEventListener("message", (e) => {
     let anchor = e.data["findElement"];
     if (anchor !== undefined) {
         let element = $(`#${anchor}`);
-        window.top.postMessage({
-            "offset": element.offset().top
-        }, "*")
+        if(element.length > 0) {
+             window.top.postMessage({
+                "offset": element.offset().top
+            }, "*")
+        }
     }
 })
 
+// FIXED AUTO-SCROLL LOGIC
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".logo-scroll-wrapper").forEach(wrapper => {
+  const wrappers = document.querySelectorAll(".logo-scroll-wrapper");
+
+  wrappers.forEach(wrapper => {
     const scrollContainer = wrapper.querySelector(".logo-scroll");
+    if (!scrollContainer) return;
+    
     const row = scrollContainer.querySelector(".row");
     const leftBtn = wrapper.querySelector(".scroll-btn.left");
     const rightBtn = wrapper.querySelector(".scroll-btn.right");
 
-    if (!scrollContainer || !row) return;
+    if (!row) return;
 
     /* ---------- CONFIG ---------- */
     const AUTO_SCROLL_SPEED = 1;
@@ -882,29 +891,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const PAUSE_AFTER_CLICK = 2500;
     /* ---------------------------- */
 
-    // 🔁 DUPLICATE CONTENT (triple for seamless loop)
+    // Duplicate content for seamless loop
     const originalContent = row.innerHTML;
     row.innerHTML = originalContent + originalContent + originalContent;
 
     let autoScrollTimer = null;
     let resumeTimeout = null;
     let isUserScrolling = false;
-    const sectionWidth = row.scrollWidth / 3;
+    let sectionWidth = 0;
 
-    // Start in middle section
-    scrollContainer.scrollLeft = sectionWidth;
+    // Helper to get width safely (returns 0 if tab is hidden)
+    function updateDimensions() {
+        if (row.scrollWidth === 0) return false; // Tab is hidden
+        sectionWidth = row.scrollWidth / 3;
+        return true;
+    }
+
+    // Initialize position
+    if (updateDimensions()) {
+        scrollContainer.scrollLeft = sectionWidth;
+    }
 
     function checkAndResetPosition() {
-      // Only reset if we're auto-scrolling (not during user interaction)
       if (isUserScrolling) return;
       
+      // If width is 0 (tab hidden), skip logic to prevent errors
+      if (!updateDimensions()) return;
+
       const currentScroll = scrollContainer.scrollLeft;
-      
-      // If we've scrolled past 2/3, reset to 1/3
+
       if (currentScroll >= sectionWidth * 2) {
         scrollContainer.scrollLeft = sectionWidth;
       }
-      // If we've scrolled before 1/3 (going backwards), reset to 2/3
       else if (currentScroll <= 0) {
         scrollContainer.scrollLeft = sectionWidth * 2;
       }
@@ -915,6 +933,9 @@ document.addEventListener("DOMContentLoaded", () => {
       isUserScrolling = false;
       
       autoScrollTimer = setInterval(() => {
+        // Stop scrolling if tab is hidden (width 0)
+        if (!updateDimensions()) return;
+
         scrollContainer.scrollLeft += AUTO_SCROLL_SPEED;
         checkAndResetPosition();
       }, AUTO_SCROLL_INTERVAL);
@@ -932,30 +953,27 @@ document.addEventListener("DOMContentLoaded", () => {
       
       resumeTimeout = setTimeout(() => {
         isUserScrolling = false;
-        // Reset position if needed before resuming
         checkAndResetPosition();
         startAutoScroll();
       }, PAUSE_AFTER_CLICK);
     }
 
-    // Arrow controls
-    leftBtn.addEventListener("click", () => {
-      pauseAndResume();
-      scrollContainer.scrollBy({
-        left: -CLICK_SCROLL_AMOUNT,
-        behavior: "smooth"
-      });
-    });
+    // Attach Button Events (Check if buttons exist first)
+    if (leftBtn) {
+        leftBtn.addEventListener("click", () => {
+          pauseAndResume();
+          scrollContainer.scrollBy({ left: -CLICK_SCROLL_AMOUNT, behavior: "smooth" });
+        });
+    }
 
-    rightBtn.addEventListener("click", () => {
-      pauseAndResume();
-      scrollContainer.scrollBy({
-        left: CLICK_SCROLL_AMOUNT,
-        behavior: "smooth"
-      });
-    });
+    if (rightBtn) {
+        rightBtn.addEventListener("click", () => {
+          pauseAndResume();
+          scrollContainer.scrollBy({ left: CLICK_SCROLL_AMOUNT, behavior: "smooth" });
+        });
+    }
 
-    // Hover pause
+    // Hover Events
     scrollContainer.addEventListener("mouseenter", () => {
       stopAutoScroll();
       isUserScrolling = true;
@@ -967,17 +985,186 @@ document.addEventListener("DOMContentLoaded", () => {
       startAutoScroll();
     });
 
-    // Handle scroll end (for smooth scroll from buttons)
-    let scrollTimeout;
-    scrollContainer.addEventListener("scroll", () => {
-      if (!isUserScrolling) return;
-      
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        checkAndResetPosition();
-      }, 150);
-    });
-
+    // Start!
     startAutoScroll();
   });
 });
+
+
+// // https://www.geeksforgeeks.org/how-to-adjust-the-width-and-height-of-iframe-to-fit-with-content-in-it/
+// // https://stackoverflow.com/questions/9153445/how-to-communicate-between-iframe-and-the-parent-site
+// // http://shorts.jeffkreeftmeijer.com/2014/scroll-to-anchors-in-iframes/#anchor-5
+// window.addEventListener("load", (e) => {
+//     // if (e.origin !== "https://www.cics.umass.edu") {
+//     //     console.log("DEBUG: Website is not https://www.cics.umass.edu, so not posting message.");
+//     //     return;
+//     // }
+
+//     const message = {
+//         height: window.document.body.scrollHeight,
+//         width: window.document.body.scrollWidth
+//     }
+
+//     window.top.postMessage(message, "*");
+
+//     $(".nav-link").on("click", function (e) {
+//     // If this is a Bootstrap tab, let Bootstrap handle it
+//     if (this.hasAttribute("data-bs-toggle")) {
+//         const href = this.getAttribute("href");
+//         if (href) {
+//             window.top.postMessage({ setAnchor: href.substring(1) }, "*");
+//         }
+//         return; // ❗ DO NOT preventDefault
+//     }
+
+//     // Normal navigation links
+//     e.preventDefault();
+// });
+
+
+// });
+
+// window.addEventListener("message", (e) => {
+//     let anchor = e.data["findElement"];
+//     if (anchor !== undefined) {
+//         let element = $(`#${anchor}`);
+//         window.top.postMessage({
+//             "offset": element.offset().top
+//         }, "*")
+//     }
+// })
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   function initializeScroller(wrapper) {
+//     // Prevent double initialization
+//     if (wrapper.dataset.scrollerInitialized) return;
+//     wrapper.dataset.scrollerInitialized = 'true';
+    
+//     const scrollContainer = wrapper.querySelector(".logo-scroll");
+//     const row = scrollContainer ? scrollContainer.querySelector(".row") : null;
+//     const leftBtn = wrapper.querySelector(".scroll-btn.left");
+//     const rightBtn = wrapper.querySelector(".scroll-btn.right");
+
+//     if (!scrollContainer || !row) return;
+
+//     /* ---------- CONFIG ---------- */
+//     const AUTO_SCROLL_SPEED = 1;
+//     const AUTO_SCROLL_INTERVAL = 20;
+//     const CLICK_SCROLL_AMOUNT = 450;
+//     const PAUSE_AFTER_CLICK = 2500;
+//     /* ---------------------------- */
+
+//     // 🔄 DUPLICATE CONTENT (triple for seamless loop)
+//     const originalContent = row.innerHTML;
+//     row.innerHTML = originalContent + originalContent + originalContent;
+
+//     let autoScrollTimer = null;
+//     let resumeTimeout = null;
+//     let isUserScrolling = false;
+//     const sectionWidth = row.scrollWidth / 3;
+
+//     // Start in middle section
+//     scrollContainer.scrollLeft = sectionWidth;
+
+//     function checkAndResetPosition() {
+//       if (isUserScrolling) return;
+      
+//       const currentScroll = scrollContainer.scrollLeft;
+      
+//       if (currentScroll >= sectionWidth * 2) {
+//         scrollContainer.scrollLeft = sectionWidth;
+//       }
+//       else if (currentScroll <= 0) {
+//         scrollContainer.scrollLeft = sectionWidth * 2;
+//       }
+//     }
+
+//     function startAutoScroll() {
+//       stopAutoScroll();
+//       isUserScrolling = false;
+      
+//       autoScrollTimer = setInterval(() => {
+//         scrollContainer.scrollLeft += AUTO_SCROLL_SPEED;
+//         checkAndResetPosition();
+//       }, AUTO_SCROLL_INTERVAL);
+//     }
+
+//     function stopAutoScroll() {
+//       clearInterval(autoScrollTimer);
+//       autoScrollTimer = null;
+//     }
+
+//     function pauseAndResume() {
+//       stopAutoScroll();
+//       isUserScrolling = true;
+//       clearTimeout(resumeTimeout);
+      
+//       resumeTimeout = setTimeout(() => {
+//         isUserScrolling = false;
+//         checkAndResetPosition();
+//         startAutoScroll();
+//       }, PAUSE_AFTER_CLICK);
+//     }
+
+//     if (leftBtn) {
+//       leftBtn.addEventListener("click", () => {
+//         pauseAndResume();
+//         scrollContainer.scrollBy({
+//           left: -CLICK_SCROLL_AMOUNT,
+//           behavior: "smooth"
+//         });
+//       });
+//     }
+
+//     if (rightBtn) {
+//       rightBtn.addEventListener("click", () => {
+//         pauseAndResume();
+//         scrollContainer.scrollBy({
+//           left: CLICK_SCROLL_AMOUNT,
+//           behavior: "smooth"
+//         });
+//       });
+//     }
+
+//     scrollContainer.addEventListener("mouseenter", () => {
+//       stopAutoScroll();
+//       isUserScrolling = true;
+//     });
+    
+//     scrollContainer.addEventListener("mouseleave", () => {
+//       isUserScrolling = false;
+//       checkAndResetPosition();
+//       startAutoScroll();
+//     });
+
+//     let scrollTimeout;
+//     scrollContainer.addEventListener("scroll", () => {
+//       if (!isUserScrolling) return;
+      
+//       clearTimeout(scrollTimeout);
+//       scrollTimeout = setTimeout(() => {
+//         checkAndResetPosition();
+//       }, 150);
+//     });
+
+//     startAutoScroll();
+//   }
+
+//   // Only initialize scrollers that are currently visible
+//   const activeTab = document.querySelector('.tab-pane.show.active');
+//   if (activeTab) {
+//     activeTab.querySelectorAll('.logo-scroll-wrapper').forEach(initializeScroller);
+//   }
+  
+//   // Initialize scrollers when tabs become visible
+//   document.querySelectorAll('button[data-bs-toggle="pill"]').forEach(button => {
+//     button.addEventListener('shown.bs.tab', function (event) {
+//       const targetId = event.target.getAttribute('data-bs-target');
+//       const targetPane = document.querySelector(targetId);
+      
+//       if (targetPane) {
+//         targetPane.querySelectorAll('.logo-scroll-wrapper').forEach(initializeScroller);
+//       }
+//     });
+//   });
+// });
