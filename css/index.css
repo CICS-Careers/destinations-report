@@ -256,3 +256,31 @@ div.popular-roles-wrap{
 .scroll-btn:hover {
     background-color: #f8f9fa;
 }
+
+
+/* 1. Prevent clipping by parents */
+nav,
+.nav,
+.nav-pills,
+.nav-item,
+.container {
+    overflow: visible !important;
+}
+
+/* 2. Ensure dropdown stacks above charts/canvas */
+.dropdown-menu {
+    position: absolute !important;
+    z-index: 10000 !important;
+    will-change: transform;
+}
+
+/* 3. Ensure dropdown parent has proper positioning context */
+.nav-item.dropdown {
+    position: relative;
+}
+
+/* 4. Fix for canvas elements that might be covering dropdown */
+canvas {
+    position: relative;
+    z-index: 1;
+}

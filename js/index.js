@@ -845,6 +845,11 @@ window.addEventListener("load", (e) => {
 
     // FIXED CLICK HANDLER
     $(".nav-link").on("click", function (e) {
+        // Skip dropdown toggles - let Bootstrap handle them
+        if ($(this).hasClass('dropdown-toggle')) {
+            return; // Don't prevent default, let Bootstrap dropdown work
+        }
+        
         // Only prevent default if it is a real link (has href), like the dropdowns.
         // If it's a Tab Button (no href), let Bootstrap handle the switch.
         const href = $(this).attr('href');

@@ -209,3 +209,9 @@
     height: 500px;
     margin: 0 auto;
   }
+
+
+/* ===== BOOTSTRAP DROPDOWN FIX ===== */
+.container {
+    overflow: visible !important;
+}
