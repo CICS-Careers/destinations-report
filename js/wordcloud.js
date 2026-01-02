@@ -607,3 +607,66 @@ zingchart.render({
 });
 
 
+
+let phdWordcloudData2025 = {
+    "graphset": [{
+        "type": "wordcloud",
+        "options": {
+            //fontSize: 14,
+            "style": {
+                "tooltip": {
+                    visible: true,
+                    text: '%text: %hits'
+                }
+            },
+            "words": [
+                {
+                    "text": "Research Scientist",
+                    "count": "1"
+                },
+                {
+                    "text": "Applied Scientist",
+                    "count": "1"
+                },
+                {
+                    "text": "Applied Researcher I",
+                    "count": "1"
+                },
+                {
+                    "text": "Senior ML Research Scientist",
+                    "count": "1"
+                },
+                {
+                    "text": "Advanced Computer Scientist",
+                    "count": "1"
+                },
+                {
+                    "text": "CTO",
+                    "count": "1"
+                },
+                {
+                    "text": "Senior ML Researcher",
+                    "count": "1"
+                },
+                {
+                    "text": "Software Engineer",
+                    "count": "1"
+                },
+                {
+                    "text": "Tenure-track assistant professor",
+                    "count": "1"
+                }
+            ]
+        }
+    }]
+};
+
+zingchart.render({
+    id: 'phd-roles-wordcloud-2025',
+    data: phdWordcloudData2025,
+    //width: 1315,
+    output: "auto",
+    minHeight: 100,
+    maxHeight: 480,
+});
+

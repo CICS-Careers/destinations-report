@@ -42,6 +42,13 @@ const PhDLabels2023 = [
     'Working'
 ];
 
+const PhDLabels2025 = [
+    'Unknown',
+    'Post-Doc',
+    'Working',
+    'Looking'
+];
+
 const UGradLabels2024 = [
     'Working',
     'Continuing Education',
@@ -265,14 +272,15 @@ const PhDdata2024 = {
 };
 
 const PhDdata2025 = {
-    labels: PhDLabels2023,
+    labels: PhDLabels2025,
     datasets: [{
         label: ' Number of Students',
-        data: [3, 2, 8],
+        data: [6, 4, 24, 2],
         backgroundColor: [
             UMassColors.GRAY,
             UMassColors.TEAL,
-            UMassColors.GREEN
+            UMassColors.GREEN,
+            UMassColors.MAROON
         ],
         hoverOffset: 4
     }],
