@@ -110,6 +110,24 @@ const MSdata2025 = {
         hoverOffset: 4
     }]
 };
+
+
+const MSdata2026 = { //TODO: UPDATE THIS
+    labels: Labels,
+    datasets: [{
+        label: ' Number of Students',
+        data: [56, 11, 60, 34, 3],
+        backgroundColor: [
+            UMassColors.GREEN,
+            UMassColors.TEAL,
+            UMassColors.MAROON,
+            UMassColors.LIGHTGRAY,
+            UMassColors.ORANGE
+        ],
+        hoverOffset: 4
+    }]
+};
+
 const MSdataKR = {
     labels: LabelsKR,
     datasets: [{
@@ -436,6 +454,42 @@ const configMS2025 = {
         }
     }
 };
+
+const configMS2026 = {
+    type: 'doughnut',
+    data: MSdata2026,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            },
+            datalabels: {
+                formatter: (value, ctx) => {
+                    return value + "\n" + ctx.chart.data.labels[ctx.dataIndex];
+                },
+                color: "#fff", // adjust if needed
+                textAlign: "center",
+                font: {
+                    family: "'Public Sans', Arial, Helvetica, sans-serif",
+                    size: 14
+                },
+                anchor: 'center', // keep labels inside arcs
+                align: (ctx) => {
+                    const index = ctx.dataIndex;
+                    const total = ctx.chart.data.labels.length;
+                    if (index === total - 1) return 'top';        // last label on top
+                    if (index === total - 2) return 'bottom';     // second last label on bottom
+                    return 'center'; // default alignment for the rest
+                },
+                offset: 4
+            }
+
+        }
+    }
+};
+
 
 const configMSKR = {
     type: 'doughnut',
@@ -844,6 +898,11 @@ const MSChart2025 = document.getElementById('MSChart2025') && new Chart(
     document.getElementById('MSChart2025'),
     configMS2025
 );
+const MSChart2026 = document.getElementById('MSChart2026') && new Chart(
+    document.getElementById('MSChart2026'),
+    configMS2026
+);
+
 
 
 const UGChart = document.getElementById('UGChart') && new Chart(
