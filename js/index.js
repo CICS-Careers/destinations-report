@@ -132,7 +132,8 @@ const MSdataKR = {
     labels: LabelsKR,
     datasets: [{
         label: ' Number of Students',
-        data: [209, 51],
+        // 2026 MS knowledge rate: 130 known, 34 unknown
+        data: [130, 34],
         backgroundColor: [
             UMassColors.LIGHTGRAY,
             UMassColors.GRAY
@@ -146,13 +147,43 @@ const UGRADdataKR = {
     labels: LabelsKR,
     datasets: [{
         label: ' Number of Students',
-        data: [368, 138],
+        // 2026 UG knowledge rate: 328 known, 344 unknown
+        data: [328, 344],
         backgroundColor: [
             UMassColors.LIGHTGRAY,
             UMassColors.GRAY
             // UMassColors.MAROON,
             // UMassColors.LIGHTGRAY
         ],
+        hoverOffset: 4
+    }]
+};
+
+const SurveyResponseLabels = ['Responded', 'Not responded'];
+
+// #TODO: Survey response rate donut is hidden in HTML until totals are finalized post-graduation.
+// When ready, add the canvases back in `index.html` / `2026.html` and set these counts.
+const UG_SURVEY_RESPONDED_2026 = 0;
+const UG_TOTAL_2026 = 0;
+const MS_SURVEY_RESPONDED_2026 = 0;
+const MS_TOTAL_2026 = 0;
+
+const UGRADSurveyResponse2026 = {
+    labels: SurveyResponseLabels,
+    datasets: [{
+        label: ' Number of Students',
+        data: [UG_SURVEY_RESPONDED_2026, Math.max(UG_TOTAL_2026 - UG_SURVEY_RESPONDED_2026, 0)],
+        backgroundColor: [UMassColors.TEAL, UMassColors.LIGHTGRAY],
+        hoverOffset: 4
+    }]
+};
+
+const MSSurveyResponse2026 = {
+    labels: SurveyResponseLabels,
+    datasets: [{
+        label: ' Number of Students',
+        data: [MS_SURVEY_RESPONDED_2026, Math.max(MS_TOTAL_2026 - MS_SURVEY_RESPONDED_2026, 0)],
+        backgroundColor: [UMassColors.TEAL, UMassColors.LIGHTGRAY],
         hoverOffset: 4
     }]
 };
@@ -559,6 +590,48 @@ const configUGRADKR = {
     }
 };
 
+const configUGRADSurvey2026 = {
+    type: 'doughnut',
+    data: UGRADSurveyResponse2026,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false },
+            datalabels: {
+                formatter: (value, ctx) => value + "\n" + ctx.chart.data.labels[ctx.dataIndex],
+                color: "#fff",
+                textAlign: "center",
+                font: {
+                    family: "'Public Sans', Arial, Helvetica, sans-serif",
+                    size: 14
+                }
+            }
+        }
+    }
+};
+
+const configMSSurvey2026 = {
+    type: 'doughnut',
+    data: MSSurveyResponse2026,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false },
+            datalabels: {
+                formatter: (value, ctx) => value + "\n" + ctx.chart.data.labels[ctx.dataIndex],
+                color: "#fff",
+                textAlign: "center",
+                font: {
+                    family: "'Public Sans', Arial, Helvetica, sans-serif",
+                    size: 14
+                }
+            }
+        }
+    }
+};
+
 const configUG = {
     type: 'doughnut',
     data: UGdata,
@@ -939,6 +1012,16 @@ const UGRADChartKR = document.getElementById('UGRADChartKR') && new Chart(
     configUGRADKR
 );
 
+const UGRADSurveyChart2026 = document.getElementById('UGRADSurveyChart2026') && new Chart(
+    document.getElementById('UGRADSurveyChart2026'),
+    configUGRADSurvey2026
+);
+
+const MSSurveyChart2026 = document.getElementById('MSSurveyChart2026') && new Chart(
+    document.getElementById('MSSurveyChart2026'),
+    configMSSurvey2026
+);
+
 
 // Use GAPI for Google Sheets
 // https://github.com/google/google-api-javascript-client/blob/master/docs/start.md
@@ -966,10 +1049,15 @@ window.addEventListener("load", (e) => {
     window.top.postMessage(message, "*");
 
     $(".nav-link").on("click", function (e) {
+        // Only intercept real links with an href.
+        // In newer pages (e.g. 2026) tabs are <button.nav-link> and Bootstrap needs the click.
+        const href = $(this).attr("href");
+        if (!href) return;
+
         e.preventDefault();
         // returns "undergraduate" from "https://destinations.ltseng.me/#undergraduate"
         window.top.postMessage({
-            "setAnchor": $(this).attr('href').split('/').pop().substring(1)
+            "setAnchor": href.split('/').pop().substring(1)
         }, "*")
     });
 });
