@@ -117,7 +117,151 @@ anychart.onDocumentReady(function () {
       ]
     }
   ];
+  var rolesDataUG2026 = [
+    {
+      name: "Roles",
+      children: [
+        {
+          name: "Software / Technical",
+          children: [
+            { name: "Software Engineer" },
+            { name: "Software Engineer Intern" },
+            { name: "Full Stack Software Engineer" },
+            { name: "Security Engineer" },
+            { name: "Technical Support Associate" },
+            { name: "Junior Software Engineer" }
+          ]
+        },
+        {
+          name: "Data",
+          children: [
+            { name: "Data Analyst" },
+            { name: "Actuarial Analyst" },
+            { name: "Data Engineer" },
+            { name: "Data Analytics Consultant" },
+            { name: "Engineering Analyst" }
+          ]
+        },
+        {
+          name: "AI / ML",
+          children: [
+            { name: "AI Engineer" },
+            { name: "Software Engineer - GenAI" },
+            { name: "Data Science Associate" }
+          ]
+        },
+        {
+          name: "Business / Product",
+          children: [
+            { name: "Financial Customer Associate" },
+            { name: "Technology Rotation Associate" },
+            { name: "Brand Technical Sales Specialist" },
+            { name: "Tech Sales" }
+          ]
+        },
+        {
+          name: "Research",
+          children: [
+            { name: "Research Associate" }
+          ]
+        }
+      ]
+    }
+  ];
+
+  var rolesDataMS2026 = [
+    {
+      name: "Roles",
+      children: [
+        {
+          name: "Software / Technical",
+          children: [
+            { name: "Software Engineer" },
+            { name: "Senior Software Engineer" },
+            { name: "Associate Software Engineer" },
+            { name: "Software Engineer Intern" },
+            { name: "Cybersecurity Engineer" },
+            { name: "Software Developer" },
+            { name: "Software QA" }
+          ]
+        },
+        {
+          name: "AI / ML",
+          children: [
+            { name: "Machine Learning Engineer" },
+            { name: "AI Engineer" },
+            { name: "Senior Applied AI/ML Associate" },
+            { name: "Search ML Intern" },
+            { name: "GenAI Scientist" },
+            { name: "Machine Learning Intern" }
+          ]
+        },
+        {
+          name: "Data",
+          children: [
+            { name: "Data Engineer" },
+            { name: "Data Scientist" },
+            { name: "Data Analyst" },
+            { name: "Pricing Analyst" },
+            { name: "Technical Architecture Analyst" }
+          ]
+        },
+        {
+          name: "Product / Solutions",
+          children: [
+            { name: "Customer Success Sales Engineer" },
+            { name: "Product Manager" },
+            { name: "AI Solution Architect - Cloud" },
+            { name: "Operations Manager" },
+            { name: "Solutions Architect" }
+          ]
+        },
+        {
+          name: "Research",
+          children: [
+            { name: "Research Scientist" },
+            { name: "Computational Scientist" }
+          ]
+        }
+      ]
+    }
+  ];
+
+  var rolesDataPhD2026 = [
+    {
+      name: "Roles",
+      children: [
+        {
+          name: "Research",
+          children: [
+            { name: "Research Scientist" },
+            { name: "Research Engineer" },
+            { name: "Machine Learning Research Engineering" }
+          ]
+        },
+        {
+          name: "AI / ML",
+          children: [
+            { name: "Applied Scientist II" },
+            { name: "Machine Learning Engineer" }
+          ]
+        },
+        {
+          name: "Academic",
+          children: [
+            { name: "Assistant Professor" },
+            { name: "Postdoctoral Researcher" },
+            { name: "Postdoctoral Scholar" }
+          ]
+        }
+      ]
+    }
+  ];
+
   // Create both charts with the same data but in different containers
   createSunburstChart("chartContainer1", rolesDataUG2025);
   createSunburstChart("chartContainer2", rolesDataMS2025);
+  createSunburstChart("chartContainerUG2026", rolesDataUG2026);
+  createSunburstChart("chartContainerMS2026", rolesDataMS2026);
+  createSunburstChart("chartContainerPhD2026", rolesDataPhD2026);
 });
