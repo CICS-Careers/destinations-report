@@ -670,3 +670,65 @@ zingchart.render({
     maxHeight: 480,
 });
 
+function renderWordcloudIfPresent(id, words) {
+    if (!document.getElementById(id)) return;
+
+    zingchart.render({
+        id,
+        data: {
+            graphset: [{
+                type: "wordcloud",
+                options: {
+                    colorType: 'palette',
+                    palette: ['#6ba539', '#00aec7', '#6ba539', '#00aec7', '#6ba539', '#00aec7'],
+                    style: {
+                        tooltip: {
+                            visible: true,
+                            text: '%text: %hits'
+                        }
+                    },
+                    words
+                }
+            }]
+        },
+        output: "auto",
+        minHeight: 100,
+        maxHeight: 480,
+    });
+}
+
+renderWordcloudIfPresent('ug2026-roles-wordcloud', [
+    { text: "Software Engineer", count: "32" },
+    { text: "Software Engineer Intern", count: "4" },
+    { text: "Data Analyst", count: "3" },
+    { text: "Actuarial Analyst", count: "2" },
+    { text: "Data Engineer", count: "2" },
+    { text: "AI Engineer", count: "2" },
+    { text: "Full Stack Software Engineer", count: "1" },
+    { text: "Security Engineer", count: "1" },
+    { text: "Technical Support Associate", count: "1" },
+    { text: "Research Associate", count: "1" }
+]);
+
+renderWordcloudIfPresent('ms2026-roles-wordcloud', [
+    { text: "Software Engineer", count: "26" },
+    { text: "Senior Software Engineer", count: "3" },
+    { text: "Machine Learning Engineer", count: "3" },
+    { text: "AI Engineer", count: "3" },
+    { text: "Associate Software Engineer", count: "2" },
+    { text: "Software Engineer Intern", count: "2" },
+    { text: "Data Engineer", count: "2" },
+    { text: "Customer Success Sales Engineer", count: "1" },
+    { text: "Product Manager", count: "1" },
+    { text: "Cybersecurity Engineer", count: "1" }
+]);
+
+renderWordcloudIfPresent('phd-roles-wordcloud-2026', [
+    { text: "Research Scientist", count: "4" },
+    { text: "Applied Scientist II", count: "2" },
+    { text: "Assistant Professor", count: "2" },
+    { text: "Postdoctoral Researcher", count: "1" },
+    { text: "Research Engineer", count: "1" },
+    { text: "Machine Learning Engineer", count: "1" },
+    { text: "Postdoctoral Scholar", count: "1" }
+]);

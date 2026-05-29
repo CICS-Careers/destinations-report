@@ -31,18 +31,30 @@
     <ul class="nav nav-pills mb-0" id="pills-tab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active"
+               id="pills-ugrad-tab"
                data-bs-toggle="pill"
-               href="#pills-ugrad">Undergraduate</a>
+               href="#pills-ugrad"
+               role="tab"
+               aria-controls="pills-ugrad"
+               aria-selected="true">Undergraduate</a>
         </li>
         <li class="nav-item">
             <a class="nav-link"
+               id="pills-ms-tab"
                data-bs-toggle="pill"
-               href="#pills-ms">Master's</a>
+               href="#pills-ms"
+               role="tab"
+               aria-controls="pills-ms"
+               aria-selected="false">Master's</a>
         </li>
         <li class="nav-item">
             <a class="nav-link"
+               id="pills-phd-tab"
                data-bs-toggle="pill"
-               href="#pills-phd">PhD</a>
+               href="#pills-phd"
+               role="tab"
+               aria-controls="pills-phd"
+               aria-selected="false">PhD</a>
         </li>
     </ul>
 
@@ -57,6 +69,7 @@
         </button>
 
         <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="./2026.html">2026</a></li>
             <li><a class="dropdown-item" href="./index.html">2025</a></li>
             <li><a class="dropdown-item" href="./2024.html">2024</a></li>
             <li><a class="dropdown-item" href="./2023.html">2023</a></li>
@@ -76,7 +89,7 @@
         </div>
 
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-ugrad" role="tabpanel" aria-labelledby="pills-ugrad-tab"tabindex="0">
+            <div class="tab-pane fade show active" id="pills-ugrad" role="tabpanel" aria-labelledby="pills-ugrad-tab" tabindex="0">
                 <div id="undergraduate" class="padded-section">
                     <div class="small-padded-section text-center">
                         <h1>Manning CICS Undergraduates</h1>
@@ -392,7 +405,7 @@
 
                     </div>
 
-                    <div class="text-callout callout-default mt-4" id="footer-text-destinations-dashboard">
+                    <div class="text-callout callout-default mt-4" id="footer-text-destinations-dashboard-ugrad">
                         Want to see a multiyear view of which employers hired the most? Check out our <a
                             href="https://www.cics.umass.edu/careers/explore-career-paths/employer-dashboard"
                             target="_blank">Employer Dashboard</a>.
@@ -417,7 +430,7 @@
                         </button>
 
                         <!-- Scroll container -->
-                        <div class="logo-scroll" id="ms-logos-scroll">
+                        <div class="logo-scroll">
                             <div class="row flex-nowrap m-0">
                             <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
                                 data-placement="top" title="University of Massachusetts Amherst">
@@ -516,7 +529,7 @@
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
 
-                        <div class="logo-scroll" id="ms-logos-scroll">
+                        <div class="logo-scroll">
                             <div class="row flex-nowrap m-0">
                                 <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
                                     data-placement="top" title="Massachusetts Institute of Technology ">
@@ -762,7 +775,7 @@
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
 
-                        <div class="logo-scroll" id="ms-logos-scroll">
+                        <div class="logo-scroll">
                             <div class="row flex-nowrap m-0">                            
                                 <div class="col-4 col-sm-3 col-md-2  d-flex align-items-center" data-toggle="tooltip"
                                 data-placement="top" title="Amazon">
@@ -868,7 +881,7 @@
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
 
-                        <div class="logo-scroll" id="ms-logos-scroll">
+                        <div class="logo-scroll">
                             <div class="row flex-nowrap m-0">                            
                             <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
                                 data-placement="top" title="MathWorks">
@@ -946,7 +959,7 @@
                         </div>
                     </div>
 
-                    <div class="text-callout callout-default mt-4" id="footer-text-destinations-dashboard">
+                    <div class="text-callout callout-default mt-4" id="footer-text-destinations-dashboard-ms">
                         Want to see a multiyear view of which employers hired the most? Check out our <a
                             href="https://www.cics.umass.edu/careers/explore-career-paths/employer-dashboard"
                             target="_blank">Employer Dashboard</a>.
@@ -974,7 +987,7 @@
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
 
-                        <div class="logo-scroll" id="ms-logos-scroll">
+                        <div class="logo-scroll">
                             <div class="row flex-nowrap m-0">   
                                                                 <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
                                     data-placement="top" title="University of Massachusetts Amherst">
@@ -1216,7 +1229,7 @@
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
 
-                        <div class="logo-scroll" id="ms-logos-scroll">
+                        <div class="logo-scroll">
                             <div class="row flex-nowrap m-0"> 
                             
                         <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"

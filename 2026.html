@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>CICS Careers | Destination Report</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="css/index.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script nonce="undefined" src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-bundle.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <div class="container">
+
+      <nav class="my-3 d-flex align-items-center">
+    <!-- Tabs -->
+    <ul class="nav nav-pills mb-0" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active"
+               id="pills-ugrad-tab"
+               data-bs-toggle="pill"
+               href="#pills-ugrad"
+               role="tab"
+               aria-controls="pills-ugrad"
+               aria-selected="true">Undergraduate</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"
+               id="pills-ms-tab"
+               data-bs-toggle="pill"
+               href="#pills-ms"
+               role="tab"
+               aria-controls="pills-ms"
+               aria-selected="false">Master's</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"
+               id="pills-phd-tab"
+               data-bs-toggle="pill"
+               href="#pills-phd"
+               role="tab"
+               aria-controls="pills-phd"
+               aria-selected="false">PhD</a>
+        </li>
+    </ul>
+
+    <!-- Spacer -->
+    <div class="ms-auto dropdown">
+        <button
+            class="btn btn-outline-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+            2026
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item active" href="./2026.html">2026</a></li>
+            <li><a class="dropdown-item" href="./index.html">2025</a></li>
+            <li><a class="dropdown-item" href="./2024.html">2024</a></li>
+            <li><a class="dropdown-item" href="./2023.html">2023</a></li>
+            <li><a class="dropdown-item" href="./2022.html">2022</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+        <div class="text-callout callout-default mt-4" id="header-text">
+            The goal of the Destination Report is to provide our CICS community of students, alumni, employers, faculty,
+            staff, and other stakeholders with annual insights into post-graduate placement for our most recent alumni.
+            Infographic information is based on a combination of student survey responses and knowledge acquired through
+            data gathering for the CICS Class of 2026.<sup class="text-secondary small-super-text">1</sup>
+            Per <a href="https://www.naceweb.org/job-market/graduate-outcomes/first-destination/" target="_blank">NACE
+                guidelines</a>, outcomes will be finalized 6 months after graduation.
+        </div>
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-ugrad" role="tabpanel" aria-labelledby="pills-ugrad-tab" tabindex="0">
+                <div id="undergraduate" class="padded-section">
+                    <div class="small-padded-section text-center">
+                        <h1>Manning CICS Undergraduates</h1>
+                    </div>
+                    <!-- Quick Stats -->
+                    <div class="small-padded-section row">
+                        <ul class="list-unstyled quick-stats offset-md-1">
+                            <li>
+                                <i class="fa-solid fa-user-graduate fa-fw"></i>
+                                <span style="font-weight: bold">505 Undergraduate students</span> in the Class of 2026<sup
+                                            class="small-super-text">2</sup>
+                                <!--               I want to only add a commit <span style="font-weight: bold">440 Undergraduate students</span> in the Class of 2022, up <i class="fa-solid fa-arrow-up"></i> <span style="font-weight: bold">40%</span> from last year!-->
+                            </li>
+                            <li class="ms-3">
+                                <i class="fa-solid fa-laptop fa-fw"></i> Degree-level breakout pending source confirmation
+                            </li>
+                            <li class="ms-3">
+                                <i class="fa-solid fa-code-branch fa-fw"></i> Report-ready employer data available for <span style="font-weight: bold">96</span> working undergraduates
+                            </li>
+                            <li class="ms-3">
+                                <i class="fa-solid fa-circle-info fa-fw"></i> Continuing education school data available for <span style="font-weight: bold">77</span> undergraduates
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Destinations Chart and Breakdown -->
+                    <div class="padded-section row">
+                        <div class="col-12 col-md-6 col-lg-7 offset-xl-1 col-xl-5">
+                            <div class="position-relative" style="height: 100%">
+                                <canvas id="UGChart2026"></canvas>
+                                <div class="text-center text-in-donut">
+                                    <!-- <h4 class="m-0">Outcomes for <br> Aug'24, Dec'24 & Feb'25</h4> -->
+                                    <h4 class="m-0"> Outcomes </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-5 col-xl-5">
+                            <div class="callout">
+                                <div class="callout-working-header">
+                                    <h3 class="m-1"><i class="fa-solid fa-briefcase fa-fw"></i>&nbsp;20% Working</h3>
+                                </div>
+                                <div class="callout-container">
+                                    <p class="m-1"><span style="font-weight: bold">103</span> undergraduates are marked as working. Employer names are report-ready for 96 of these records.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="callout">
+                                <div class="callout-continuing-ed-header">
+                                    <h3 class="m-1"><i class="fa-solid fa-user-graduate fa-fw"></i>&nbsp;22% Continuing
+                                        Education</h3>
+                                </div>
+                                <div class="callout-container">
+                                    <p class="m-1"><span style="font-weight: bold">112</span> undergraduates are marked as continuing education. School names are report-ready for 77 of these records.</p>
+                                </div>
+                            </div>
+                            <div class="callout">
+                                <div class="callout-looking-header">
+                                    <h3 class="m-1"><i class="fa-solid fa-magnifying-glass fa-fw"></i>&nbsp;26% Looking
+                                    </h3>
+                                </div>
+                                <div class="callout-container">
+                                    <p class="m-1">These alumni are searching for their next opportunity with the ongoing
+                                        support of CICS Careers. <span style="font-weight: bold">We help alumni for life.</span></p>
+                                </div>
+                            </div>
+                            <div class="callout">
+                                <div class="callout-not-seeking-header">
+                                    <h3 class="m-1"><i class="fa-solid fa-magnifying-glass fa-fw"></i>&nbsp;&lt;1% Not
+                                            Seeking
+                                </h3>
+                                </div>
+                                <div class="callout-container">
+                                    <p class="m-1">Some recent graduates decide to travel, volunteer, etc. before
+                                        seeking employment or continuing education.</p>
+                                </div>
+                            </div>
+                            <div class="callout">
+                                <div class="callout-unknown-header">
+                                    <h3 class="m-1"><i class="fa-solid fa-question fa-fw"></i>&nbsp;31% Unknown<sup
+                                            class="small-super-text">3</sup></h3>
+                                </div>
+                                <div class="callout-container">
+                                    <p class="m-1">We know post-graduation outcomes for 69% of our undergraduates, but
+                                        <span style="font-weight: bold">some</span> have not done our <a
+                                            href="https://umassamherst.co1.qualtrics.com/jfe/form/SV_6rlcSDwiUaMgxGC">Careers
+                                            Survey</a> yet.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="padded-section text-center">
+                        <div class="callout-cell" style="width: 70%; margin: 0 auto;">
+                            <h1>Typical Salary Range<sup class="text-secondary small-super-text">4</sup></h1>
+                            <h5 class="mb-0">2026 salary data pending</h5>
+                        </div>
+                    </div>
+
+
+                    <!-- Employers -->
+                    <div class="padded-section">
+                        <h3>67 Report-Ready Employers (11 Hired Multiple)</h3>
+                        <div class="text-callout callout-default">Logo carousel pending final 2026 curation.</div>
+                        <p class="small-text">Top report-ready undergraduate employers include Fidelity Investments, Liberty Mutual, Travelers, Google, IBM, Capital One, Citizens Bank, Oracle, Schneider Electric, EY, and Dell.</p>
+                        <div class="logo-scroll-wrapper position-relative">
+
+                        <!-- Left Arrow -->
+                        <button class="scroll-btn left" type="button" aria-label="Scroll left">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <!-- Scroll container -->
+                        <div class="logo-scroll">
+                            <div class="row flex-nowrap m-0">
+                            <!-- KEEP ALL YOUR EXISTING col-* ITEMS EXACTLY AS THEY ARE -->
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Travelers">
+                                <img src="img/Travelers-Logo.png" class="img-fluid p-2" alt="Travelers">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Capital One">
+                                <img src="img/Capital_One_Logo.png" class="img-fluid p-2" alt="Capital One">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Amazon">
+                                <img src="img/Amazon_logo.svg.png" class="img-fluid p-2" alt="Amazon">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Liberty Mutual Insurance">
+                                <img src="img/Liberty-Mutual-Logo.png" class="img-fluid p-2" alt="Liberty Mutual insurance">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Epic">
+                                <img src="img/Epic-Systems-Logo.png" class="img-fluid p-2" alt="Epic">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Goldman Sachs">
+                                <img src="img/Goldman Sachs.png" class="img-fluid p-2" alt="Goldman Sachs">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="PayPal">
+                                <img src="img/PayPal.png" class="img-fluid p-2" alt="PayPal">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Oracle">
+                                <img src="img/Oracle-Logo.png" class="img-fluid p-2" alt="Oracle">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Addepar">
+                                <img src="img/addeparlogo.png" class="img-fluid p-2" alt="Addepar">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Google">
+                                <img src="img/google-logo.png" class="img-fluid p-2" alt="Google">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="JP Morgan Chase">
+                                <img src="img/JPMorgan-logo.png" class="img-fluid p-2" alt="JP Morgan Chase">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Microsoft">
+                                <img src="img/Microsoft_logo_(2012).svg.png" class="img-fluid p-2" alt="Microsoft">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Fidelity Investments">
+                                <img src="img/Fidelity-Logo.png" class="img-fluid p-2" alt="Fidelity Investments">
+                            </div>
+                            <!--<div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Ernst & Young">
+                                <img src="img/EY_Logo_New.png" class="img-fluid p-2" alt="Ernst & Young">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Bank of America">
+                                <img src="img/Bank_of_America_Corporation_Logo-1.webp" class="img-fluid p-2"
+                                    alt="Bank of America">
+                            </div>
+                                                <div class="sticky-container">-->
+                            <!--                        <div class="sticky-outer">-->
+                            <!--                            <div class="sticky">-->
+                            <!--                                <svg width="0" height="0">-->
+                            <!--                                    <defs>-->
+                            <!--                                        <clipPath id="stickyClip" clipPathUnits="objectBoundingBox">-->
+                            <!--                                            <path-->
+                            <!--                                                    d="M 0 0 Q 0 0.69, 0.03 0.96 0.03 0.96, 1 0.96 Q 0.96 0.69, 0.96 0 0.96 0, 0 0"-->
+                            <!--                                                    stroke-linejoin="round"-->
+                            <!--                                                    stroke-linecap="square"-->
+                            <!--                                            />-->
+                            <!--                                        </clipPath>-->
+                            <!--                                    </defs>-->
+                            <!--                                </svg>-->
+                            <!--                                <div class="sticky-content" style="font-size: 20px">-->
+                            <!--                                    &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.cics.umass.edu/careers/articles/destinations-dashboard" style="color: black"> Check out this comprehensive list of employers!</a><br>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                        </div>-->
+                            <!--                    </div>-->
+                            </div>
+                            </div>
+
+                            <!-- Right Arrow -->
+                            <button class="scroll-btn right" type="button" aria-label="Scroll right">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+
+                            </div>
+
+                                                </div>
+
+                    <!-- Locations -->
+                    <div class="padded-section text-center">
+                        <h3>Where Graduates Went To Work<sup class="text-secondary small-super-text">5</sup></h3>
+                        <div class="row">
+                            <div class="offset-md-2 col-md-8 offset-xl-3 col-xl-6 text-center">
+                                <div class="text-callout callout-default">
+                                    2026 map data is pending. Current cleaned data has report-ready state values for 36 working records across all programs.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- aMAzing Employers -->
+                    <div class="padded-section">
+                        <h3 class="d-inline">a<strong>MA</strong>zing Employers</h3>
+                        <img width="75px" class="p-2" src="img/massachusetts.svg" alt="Massachusetts Map" />
+                        <div class="logo-scroll-wrapper position-relative">
+
+                        <!-- Left Arrow -->
+                        <button class="scroll-btn left" type="button" aria-label="Scroll left">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <!-- Scroll container -->
+                        <div class="logo-scroll">
+                            <div class="row flex-nowrap m-0">
+                            <!-- KEEP ALL YOUR EXISTING col-* ITEMS EXACTLY AS THEY ARE -->
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Optum">
+                                <img src="img/optum-logo-296D11161F-seeklogo.com.png" class="img-fluid p-2" alt="Optum">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="UKG">
+                                <img src="img/ukg.png" class="img-fluid p-2" alt="UKG">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Mass General Brigham">
+                                <img src="img/massGeneralLogo.jpg" class="img-fluid p-2" alt="Mass General Brigham">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Meditech">
+                                <img src="img/meditechLogo.jpg" class="img-fluid p-2" alt="Meditech">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Commonwealth Of Massachusetts">
+                                <img src="img/commonwealthOfMassachusetts.jpg" class="img-fluid p-2" alt="Commonwealth Of Massachusetts">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Wayfair">
+                                <img src="img/Wayfair-Logo.png" class="img-fluid p-2" alt="Wayfair">
+                            </div>
+                            
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="TJX">
+                                <img src="img/TJX_Companies-Logo.wine.png" class="img-fluid p-2" alt="TJX">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="MathWorks">
+                                <img src="img/MathWorks.png" class="img-fluid p-2" alt="MathWorks">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="DraftKings">
+                                <img src="img/DraftKings.png" class="img-fluid p-2" alt="DraftKings">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Klaviyo">
+                                <img src="img/Klaviyo.jpg" class="img-fluid p-2" alt="Klaviyo">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Dell">
+                                <img src="img/delllogo2.png" class="img-fluid p-2" alt="Dell" width="150px">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="The Hanover Insurance Group">
+                                <img src="img/the-hanover-insurance-group-vector-logo.png" class="img-fluid p-2" alt="The Hanover Insurance Group">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="MITRE">
+                                <img src="img/Mitre_Corporation_logo.svg.png" class="img-fluid p-2" alt="MITRE">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="GEICO">
+                                <img src="img/Geico_logo.svg.png" class="img-fluid p-2" alt="GEICO">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Toast">
+                                <img src="img/Toast_logo.png" class="img-fluid p-2" alt="Toast">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex justify-content-center align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="STR">
+                                <img src="img/str_us_logo.jpeg" class="img-fluid p-2" alt="STR" style="max-width: 90px;">
+                            </div>
+                            </div>
+                            </div>
+
+                            <!-- Right Arrow -->
+                            <button class="scroll-btn right" type="button" aria-label="Scroll right">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+
+                            </div>
+
+                    </div>
+
+                    <div class="text-callout callout-default mt-4" id="footer-text-destinations-dashboard-ugrad">
+                        Want to see a multiyear view of which employers hired the most? Check out our <a
+                            href="https://www.cics.umass.edu/careers/explore-career-paths/employer-dashboard"
+                            target="_blank">Employer Dashboard</a>.
+                    </div>
+
+	                    <div class="padded-section text-center">
+	                        <h3>Roles Breakdown</h3>
+	                        <div id="ug2026-roles-wordcloud" class="roles-wordcloud"></div>
+	                    </div>
+
+
+	                    <!-- Advanced Degrees -->
+	                    <div class="padded-section">
+	                        <h3>Advanced Degrees <i class="fa-solid fa-user-graduate fa-fw"></i></h3>
+	                        <div class="text-callout callout-default">
+	                            2026 advanced-degree school data is partially cleaned. Current report-ready undergraduate continuing education schools include UMass Amherst, Duke University, University of Texas at Dallas, Northeastern University, Boston University, Georgia Institute of Technology, Columbia University, University of Illinois Urbana-Champaign, NYU, Harvard Graduate School of Education, Carnegie Mellon University, and Simon Fraser University.
+	                        </div>
+	                        <div class="small-padded-section mt-4">
+                        <h5>Master's Programs</h5>
+
+                        <div class="logo-scroll-wrapper position-relative" data-autoscroll="true">
+                        <!-- Left Arrow -->
+                        <button class="scroll-btn left" type="button" aria-label="Scroll left">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <!-- Scroll container -->
+                        <div class="logo-scroll">
+                            <div class="row flex-nowrap m-0">
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="University of Massachusetts Amherst">
+                                <img src="img/UMassAmherst_logo.png" class="img-fluid p-2" alt="University of Massachusetts Amherst">
+                            </div>
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Cornell University">
+                                <img src="img/Cornell-University-Logo.png" class="img-fluid p-2" alt="Cornell University">
+                            </div>
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="CMU">
+                                <img src="img/carnegie_melon.png" class="img-fluid p-2" alt="CMU">
+                            </div>
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Columbia University">
+                                <img src="img/columbia%20univ.png" class="img-fluid p-2" alt="Columbia University">
+                            </div>
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Georgia Institute of Technology">
+                                <img src="img/georgia institute.png" class="img-fluid p-2" alt="Georgia Institute of Technology">
+                            </div>
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="KAUST">
+                                <img src="img/KAUST_Logo.svg.png" class="img-fluid p-2" alt="King Abdullah University of Science and Technology">
+                            </div>
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Northeastern University">
+                                <img src="img/NorthEastern.png" class="img-fluid p-2" alt="Northeastern University">
+                            </div>
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Yale University">
+                                <img src="img/yale.png" class="img-fluid p-2" alt="Yale University">
+                            </div>
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="University of Southern California">
+                                <img src="img/USCLogo.png" class="img-fluid p-2" alt="University of Southern California">
+                            </div>
+
+                           
+
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="NYU Tandon School of Engineering">
+                                <img src="img/New_york_university_NYU.png" class="img-fluid p-2" alt="NYU Tandon School of Engineering">
+                            </div>
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Penn State University">
+                                <img src="img/penn_state.png" class="img-fluid p-2" alt="Penn State University">
+                            </div>
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="UC San Diego">
+                                <img src="img/UCSD-Logo.png" class="img-fluid p-2" alt="UC San Diego">
+                            </div>
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="University of Illinois Urbana-Champaign">
+                                <img src="img/illinoislogo.png" class="img-fluid p-2" alt="University of Illinois Urbana-Champaign">
+                            </div>
+
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="University of Wisconsin–Madison">
+                                <img src="img/UW_Madison_new.png" class="img-fluid p-2" alt="University of Wisconsin–Madison">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Brown University">
+                                <img src="img/brownUniversity.png" class="img-fluid p-2" alt="Brown University">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Boston College">
+                                <img src="img/BostonCollege.jpg" class="img-fluid p-2" alt="Boston College">
+                            </div>
+                            
+                            </div>
+                        </div>
+                        <!-- Right Arrow -->
+                        <button class="scroll-btn right" type="button" aria-label="Scroll right">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                        </div>
+
+                        <div class="small-padded-section">
+                            <h5>Doctorate (PhD) Programs</h5>
+                            <div class="logo-scroll-wrapper position-relative" data-autoscroll="true">
+                        <!-- Left Arrow -->
+                        <button class="scroll-btn left" type="button" aria-label="Scroll left">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <div class="logo-scroll">
+                            <div class="row flex-nowrap m-0">
+                                <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                    data-placement="top" title="Massachusetts Institute of Technology ">
+                                    <img src="img/MIT-Logo.png" class="img-fluid p-2"
+                                        alt="Massachusetts Institute of Technology ">
+                                </div>
+                                <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                    data-placement="top" title="University of Wisconsin Madison">
+                                    <img src="img/UW_Madison_new.png" class="img-fluid p-2"
+                                        alt="University of Wisconsin Madison">
+                                </div>
+                                <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                    data-placement="top" title="University of Vermont">
+                                    <img src="img/UVermont_Logo.png" class="img-fluid p-2" alt="University of Vermont ">
+                                </div>
+                                <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                    data-placement="top" title="Dartmouth College">
+                                    <img src="img/Dartmouth_College.jpg" class="img-fluid p-2" alt="Dartmouth College">
+                                </div>
+                                               <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip" data-placement="top" title="Stony Brook University">
+                                                   <img src="img/stonyBrookUniversity.jpg" class="img-fluid p-2" alt="Stony Brook University">
+                                                </div>
+                                <!-- <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                 data-placement="top"
+                                 title="University of Kentucky">
+                                <img src="img/uklogo.png" class="img-fluid p-2" alt="University of Kentucky">
+                            </div> -->
+                            </div>
+                        </div>
+                            <button class="scroll-btn right" type="button" aria-label="Scroll right">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                        </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Popular Informatics Roles -->
+                    <!-- <div class="text-center small-padded-section">
+                        <h3>Job Roles</h3>
+                        <div id="ug2025-roles-wordcloud"></div>
+                    </div> -->
+                    <hr />
+                    <div class="kr-wrap">
+                        <!-- <div class="kr-s2">Fill out the 
+                        <a href="https://umassamherst.co1.qualtrics.com/jfe/form/SV_6rlcSDwiUaMgxGC" target="_blank"
+                            rel="noopener noreferrer">
+                            Careers Survey 
+                        </a>
+                    so we can add more charts on % employed, location, salary, industries, etc.</div> -->
+                        <div>
+                            <a href="https://umassamherst.co1.qualtrics.com/jfe/form/SV_6rlcSDwiUaMgxGC" target="_blank"
+                                rel="noopener noreferrer">
+                                <div class="small-padded-section text-center">
+                                    <img src="img/survey.png" class="img-fluid" alt="Careers Survey" width="400px">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Career Fair Repeated -->
+                    <!-- <div class="padded-section">
+                    <h3 class="text-center"><i class="fa-regular fa-handshake"></i> Career Fair Employers 4 Years In a
+                        Row!</h3>
+                    <div class="empGrid h-100 d-flex flex-row flex-wrap align-items-center justify-content-center mt-4"
+                         style="text-align: center">
+                        <div>
+                            <h4>Interactive Brokers</h4>
+                            <h4>Fast Enterprises</h4>
+                            <h4>Arista Networks</h4>
+                            <h4 class="mb-0">Constant Contact</h4>
+                        </div>
+                    </div>
+                </div> -->
+                    <div class="container footer small-padded-section">
+                        <!-- Careers Survey -->
+
+                        <!-- Thank You -->
+                        <div class="blockquote-footer small-padded-section mt-5">
+                            <h3 class="text-center">Thanks for being part of our CICS Career Community!</h3>
+                        </div>
+
+                        <!-- Footnotes -->
+                        <div class="padded-section">
+                            <h6>Notes</h6>
+                            <ul class="p-0 padded-section">
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">1</sup>
+                                    Data points were collected through the Careers Survey, Graduation Celebration, Registrations, LinkedIn Profiles and Staff Knowledge.
+                                </li>
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">2</sup>
+                                    Students graduated in August (31), Dec (131), Feb(6), and May (349).
+                                </li>
+                                <!-- <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">2</sup>
+                                    View filterable list of employers on <a
+                                        href="https://www.cics.umass.edu/careers/explore-career-paths/employer-dashboard">Employer
+                                        Dashboard.</a>
+                                </li> -->
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">3</sup>
+                                    For example, if 90% are working but 50% are unknown, it's more accurate to assume that closer to 40% are working.
+                                </li>
+                                <!-- <li class="list-unstyled m-2 small-text">
+                                <sup class="text-secondary d-inline-block text-center" style="width: 15px">4</sup>
+                                Many offers also include bonuses and equity in total compensation.
+                                </li> -->
+                                    <!-- <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">5</sup>
+                                    Based on replies to the question "Are you satisfied with your post-graduate plans?" from the Careers
+                                    Survey.
+                                </li> -->
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">4</sup>
+                                    Based on compensation data known for 13% of those working; represents 25-50 percentile to offset known bias that those who report salary tend to be above average.
+                                </li>
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">5</sup>
+                                    Numerous graduates have also pursued opportunities internationally. Remote work continues to be popular. Created with mapchart.net.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+            <div class="tab-pane fade" id="pills-ms" role="tabpanel" aria-labelledby="pills-ms-tab" tabindex="0">
+                <div id="masters" class="padded-section">
+
+                    <div class="small-padded-section text-center">
+                        <h1>Manning CICS Master's</h1>
+                    </div>
+
+                    <!-- <div class="padded-section text-center">
+                        <div class="callout-cell" style="width: 70%; margin: 0 auto;">
+                            <h5 class="mb-0">May 2025 data coming soon!</h5>
+                        </div>
+                    </div> -->
+
+                    <!-- Quick Stats -->
+                    <div class="small-padded-section row">
+                        <ul class="list-unstyled quick-stats offset-md-1">
+                            <li>
+	                                <i class="fa-solid fa-user-graduate"></i> <span style="font-weight: bold">278 MS
+	                                    students</span> in the Class of 2026 <sup
+                                    class="small-super-text">2</sup>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="padded-section row">
+                        <div class="col-12 col-md-6 col-lg-7 offset-xl-1 col-xl-5">
+                            <div class="position-relative" style="height: 100%">
+	                                <canvas id="MSChart2026"></canvas>
+                                <div class="text-center text-in-donut">
+                                    <!-- <h4 class="m-0">Outcomes for <br> Aug'24 and Dec'24 </h4> -->
+                                    <h4 class="m-0"> Outcomes </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-5 col-xl-5">
+                            <div class="callout">
+                                <div class="callout-working-header">
+	                                    <h3 class="m-1"><i class="fa-solid fa-briefcase fa-fw"></i>&nbsp;34% Working</h3>
+                                </div>
+                                <div class="callout-container">
+                                    <p class="m-1">
+	                                        <span style="font-weight: bold">94</span> Master's graduates are marked as working. Employer names are report-ready for 85 of these records.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="callout">
+                                <div class="callout-continuing-ed-header">
+	                                    <h3 class="m-1"><i class="fa-solid fa-user-graduate fa-fw"></i>&nbsp;4% Continuing Education<sup class="small-super-text">3</sup></h3>
+                                </div>
+                                <div class="callout-container">
+	                                    <p class="m-1"><span style="font-weight: bold">11</span> Master's graduates are marked as continuing education. School names are report-ready for 4 of these records.</p>
+                                </div>
+                            </div>
+                            <div class="callout">
+                                <div class="callout-looking-header">
+	                                    <h3 class="m-1"><i class="fa-solid fa-magnifying-glass fa-fw"></i>&nbsp;39% Looking
+                                    </h3>
+                                </div>
+                                <div class="callout-container">
+                                    <p class="m-1">These alumni are searching for their next opportunity with the ongoing support of CICS Careers. <span style="font-weight: bold">We help alumni for life.</span></p>
+                                </div>
+                            </div>
+                            <div class="callout">
+                                <div class="callout-not-seeking-header">
+                                    <h3 class="m-1"><i class="fa-solid fa-magnifying-glass fa-fw"></i>&nbsp;1% Not Seeking</h3>
+                                </div>
+                                <div class="callout-container">
+                                    <p class="m-1">Some recent graduates decide to travel, volunteer, etc. before seeking employment or continuing education.</p>
+                                </div>
+                            </div>
+
+                            <div class="callout">
+                                <div class="callout-unknown-header">
+	                                    <h3 class="m-1"><i class="fa-solid fa-question fa-fw"></i>&nbsp;22% Unknown<sup
+                                            class="small-super-text">4</sup></h3>
+                                </div>
+                                <div class="callout-container">
+	                                    <p class="m-1">We know post-graduation outcomes for 78% of our Master's graduates, but some have not done our <a href="https://umassamherst.co1.qualtrics.com/jfe/form/SV_6rlcSDwiUaMgxGC">Careers Survey</a> yet.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Callout Cells for Master's Median Salary and Satisfaction Rate -->
+                    <div class="padded-section text-center">
+                        <div class="row callout-cell-row">
+                            <div class="col-12 offset-md-1 col-md-10 offset-lg-1 col-lg-10 callout-cell-container">
+                                <div class="callout-cell text-center">
+                                    <!-- <h6><i class="fa-regular fa-sack-dollar"></i> Median Salary<sup
+                                        class="text-secondary">4</sup>
+                                </h6> -->
+                                    <h1>Typical Salary Range<sup
+                                        class="small-super-text">5</sup></h1>
+                                    </h1>
+	                                    <h5 class="mb-0">2026 salary data pending</h5>
+                                </div>
+                            </div>
+                            <!-- <div class="col-12 col-md-4 col-lg-3 callout-cell-container">
+                            <div class="callout-cell text-center">
+                                <h6><i class="fa-regular fa-face-smile"></i> Satisfaction Rate</h6>
+                                <h1 class="mb-0">92%</h1>
+                            </div>
+                        </div> -->
+                        </div>
+                    </div>
+
+                    <!-- Employers -->
+                    <div class="padded-section">
+	                        <h3>71 Report-Ready Employers (8 Hired Multiple)</h3>
+	                        <div class="text-callout callout-default">Logo carousel pending final 2026 curation.</div>
+	                        <p class="small-text">Top report-ready Master's employers include Amazon, Fidelity Investments, Oracle, Apple, NVIDIA, Google, Chewy, and Meta.</p>
+<div class="logo-scroll-wrapper position-relative" data-autoscroll="true">
+                        <!-- Left Arrow -->
+                        <button class="scroll-btn left" type="button" aria-label="Scroll left">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <div class="logo-scroll">
+                            <div class="row flex-nowrap m-0">                            
+                                <div class="col-4 col-sm-3 col-md-2  d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Amazon">
+                                <img src="img/Amazon_logo.svg.png" class="img-fluid p-2" alt="Amazon">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Meta">
+                                <img src="img/Meta_Platforms_Inc._logo.svg.png" class="img-fluid p-2" alt="Meta">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Adobe">
+                                <img src="img/Adobe-logo.png" class="img-fluid p-2" alt="Adobe">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Google">
+                                <img src="img/google-logo.png" class="img-fluid p-2" alt="Google">
+                            </div>
+                                                 <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Capital One">
+                                <img src="img/Capital_One_Logo.png" class="img-fluid p-2" alt="Capital One">
+                            </div>
+                                                 <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Travelers">
+                                <img src="img/Travelers-Logo.png" class="img-fluid p-2" alt="Travelers">
+                            </div>
+                                                 <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Qualcomm">
+                                <img src="img/Qualcomm-Logo.svg.png" class="img-fluid p-2" alt="Qualcomm">
+                            </div>
+                                                 <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Nutanix">
+                                <img src="img/Nutanix_Logo.svg.png" class="img-fluid p-2" alt="Nutanix">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="NVIDIA">
+                                <img src="img/nvidia-logo.png" class="img-fluid p-2" alt="NVIDIA">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Microsoft">
+                                <img src="img/Microsoft_logo_(2012).svg.png" class="img-fluid p-2" alt="Microsoft">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Oracle">
+                                <img src="img/Oracle-Logo.png" class="img-fluid p-2" alt="Oracle">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Rubrik">
+                                <img src="img/rubrik-logo.png" class="img-fluid p-2" alt="Rubrik">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Pure Storage">
+                                <img src="img/Pure-Storage_logo.jpg" class="img-fluid p-2" alt="Pure Storage">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Nokia Bell Labs">
+                                <img src="img/nokia_bell_labs.jpg" class="img-fluid p-2" alt="Nokia Bell Labs">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Veeva Systems">
+                                <img src="img/Veeva logo orange&grey 2.png" class="img-fluid p-2" alt="Veeva Systems">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="JPMorgan">
+                                <img src="img/JPMorgan-logo.png" class="img-fluid p-2" alt="JPMorgan">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Morgan Stanley">
+                                <img src="img/Morgan-Stanley-Logo.png" class="img-fluid p-2" alt="Morgan Stanley">
+                            </div>
+                        </div>
+                            <button class="scroll-btn right" type="button" aria-label="Scroll right">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Industries -->
+                    <!-- <div class="padded-section text-center">
+                    <h3>Industries Breakdown</h3>
+                    <div class="chart2025-wrap">
+                        <div id="sunburstChart2025" class="chart2025 chart--container"></div>
+                    </div>
+                </div> -->
+
+                    <div class="padded-section text-center">
+                        <h3>Where Graduates Went To Work<sup class="text-secondary small-super-text">6</sup></h3>
+                        <div class="row">
+                            <div class="offset-md-2 col-md-8 offset-xl-3 col-xl-6 text-center">
+	                                <div class="text-callout callout-default">
+	                                    2026 map data is pending. Current cleaned data has limited report-ready state values.
+	                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- aMAzing Employers -->
+                    <div class="padded-section">
+                        <h3 class="d-inline">a<strong>MA</strong>zing Employers</h3>
+                        <img width="75px" class="p-2" src="img/massachusetts.svg" alt="Massachusetts Map" />
+<div class="logo-scroll-wrapper position-relative" data-autoscroll="true">
+                        <!-- Left Arrow -->
+                        <button class="scroll-btn left" type="button" aria-label="Scroll left">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <div class="logo-scroll">
+                            <div class="row flex-nowrap m-0">                            
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="MathWorks">
+                                <img src="img/MathWorks.png" class="img-fluid p-2" alt="Mathworks">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Crowd Strike">
+                                <img src="img/crowdStrike.jpeg" class="img-fluid p-2" alt="Crowd Strike">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Advisor 360">
+                                <img src="img/advisor360.png" class="img-fluid p-2" alt="Advisor 360">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="UKG">
+                                <img src="img/ukg.png" class="img-fluid p-2" alt="UKG">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Klaviyo">
+                                <img src="img/Klaviyo.jpeg" class="img-fluid p-2" alt="Klaviyo">
+                            </div>
+                            <!-- <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Arista Networks">
+                                <img src="img/athena-health-logo.png" class="img-fluid p-2" alt="Arista Networks">
+                            </div> -->
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Ribbon Communications">
+                                <img src="img/ribbon_communications.png" class="img-fluid p-2" alt="Ribbon Communications">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="athenahealth">
+                                <img src="img/athena-health-logo.png" class="img-fluid p-2" alt="athenahealth">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Boston Consulting Group">
+                                <img src="img/Boston Consulting Group.png" class="img-fluid p-2" alt="Boston Consulting Group">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Fidelity Investments">
+                                <img src="img/Fidelity-Logo.png" class="img-fluid p-2" alt="Fidelity Investments">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Wayfair">
+                                <img src="img/Wayfair-Logo.png" class="img-fluid p-2" alt="Wayfair">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Lila Sciences Inc">
+                                <img src="img/Lila Sciences Inc.png" class="img-fluid p-2" alt="Lila Sciences Inc">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Granite Technologies">
+                                <img src="img/Granite_logo_rgb_blue_copy.jpg" class="img-fluid p-2" alt="Granite Technologies">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="eClinicalWorks">
+                                <img src="img/eClinicalWorks.jpg" class="img-fluid p-2" alt="eClinicalWorks">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Raytheon Technologies">
+                                <img src="img/Raytheon_BBN.png" class="img-fluid p-2" alt="Raytheon Technologies">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Massachusetts Water Resources Authority">
+                                <img src="img/MassachusettsWaterResourceAuthority(MWRA).png" class="img-fluid p-2" alt="Massachusetts Water Resources Authority">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="PTC Inc.">
+                                <img src="img/PTC.png" class="img-fluid p-2" alt="PTC Inc.">
+                                </div>
+                        </div>
+                            <button class="scroll-btn right" type="button" aria-label="Scroll right">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-callout callout-default mt-4" id="footer-text-destinations-dashboard-ms">
+                        Want to see a multiyear view of which employers hired the most? Check out our <a
+                            href="https://www.cics.umass.edu/careers/explore-career-paths/employer-dashboard"
+                            target="_blank">Employer Dashboard</a>.
+                    </div>
+
+                    <!-- Popular Job Roles -->
+                    <!-- <div class="text-center small-padded-section popular-roles-wrap">
+                    <h3>Popular Job Roles</h3>
+                    <div id="ms2025-roles-wordcloud" class="roles-wordcloud"></div>
+                </div> -->
+	                    <div class="padded-section text-center">
+	                        <h3>Roles Breakdown</h3>
+	                        <div id="ms2026-roles-wordcloud" class="roles-wordcloud"></div>
+	                    </div>
+                    <hr />
+	                    <div class="padded-section">
+	                        <h3>Advanced Degrees <i class="fa-solid fa-user-graduate fa-fw"></i></h3>
+	                        <div class="text-callout callout-default">
+	                            2026 advanced-degree school data is limited for Master's graduates. Current report-ready records include UMass Amherst and Simon Fraser University.
+	                        </div>
+
+
+                        <div class="small-padded-section">
+                            <h5>Doctorate (PhD) Programs</h5>
+<div class="logo-scroll-wrapper position-relative" data-autoscroll="true">
+                        <!-- Left Arrow -->
+                        <button class="scroll-btn left" type="button" aria-label="Scroll left">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <div class="logo-scroll">
+                            <div class="row flex-nowrap m-0">   
+                                                                <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                    data-placement="top" title="University of Massachusetts Amherst">
+                                    <img src="img/UMassAmherst_logo.png" class="img-fluid p-2"
+                                        alt="University of Massachusetts Amherst">
+                                </div>
+                                <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                    data-placement="top" title="Northeastern University">
+                                    <img src="img/NorthEastern.png" class="img-fluid p-2" alt="Northeastern University">
+                                </div>
+                                <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                    data-placement="top" title="Cornell University">
+                                    <img src="img/Cornell-University-Logo.png" class="img-fluid p-2"
+                                        alt="Cornell University">
+                                </div>
+                                <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                    data-placement="top" title="Oregon State University">
+                                    <img src="img/oregonstateuniversity.png" class="img-fluid p-2"
+                                        alt="Oregon State University">
+                                </div>
+                                <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                    data-placement="top" title="Southern Methodist University">
+                                    <img src="img/southernMethodistUniversity.jpeg" class="img-fluid p-2"
+                                        alt="Southern Methodist University">
+                                </div>
+                                <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                    data-placement="top" title="University of Colorado Boulder">
+                                    <img src="img/University of Colorado Boulder.png" class="img-fluid p-2"
+                                        alt="University of Colorado Boulder">
+                                </div>
+                        </div>
+                            <button class="scroll-btn right" type="button" aria-label="Scroll right">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Destinations Chart and Breakdown -->
+                    <!-- <div class="dummy"></div> -->
+                    <div></div>
+                    
+                    <div class="kr-wrap">
+                        <!-- <div class="kr-s2">Fill out the 
+                                    <a href="https://umassamherst.co1.qualtrics.com/jfe/form/SV_6rlcSDwiUaMgxGC" target="_blank"
+                                        rel="noopener noreferrer">
+                                        Careers Survey 
+                                    </a>
+                                so we can add more charts on % employed, location, salary, industries, etc.</div> -->
+                        <div>
+                            <a href="https://umassamherst.co1.qualtrics.com/jfe/form/SV_6rlcSDwiUaMgxGC" target="_blank"
+                                rel="noopener noreferrer">
+                                <div class="small-padded-section text-center">
+                                    <img src="img/survey.png" class="img-fluid" alt="Careers Survey" width="400px">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    
+
+
+                    <div class="container footer small-padded-section">
+                        <!-- Careers Survey -->
+
+                        <!-- Thank You -->
+                        <div class="blockquote-footer small-padded-section mt-5">
+                            <h3 class="text-center">Thanks for being part of our CICS Career Community!</h3>
+                        </div>
+
+                        <!-- Footnotes -->
+                        <!-- View filterable list of employers on <a
+                                            href="https://www.cics.umass.edu/careers/explore-career-paths/employer-dashboard">Employer
+                                            Dashboard.</a> -->
+                        <div class="padded-section">
+                            <h6>Notes</h6>
+                            <ul class="p-0 padded-section">
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">1</sup>
+                                    Data points were collected through the Careers Survey, Graduation Celebration
+                                    Registrations, LinkedIn
+                                    Profiles and Staff Knowledge.
+                                </li>
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">2</sup>
+                                    Students graduated in August (8), Dec (58), and May (260).
+                                </li>
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">3</sup>
+                                    Continuing Ed doesn't include <a
+                                        href="https://www.cics.umass.edu/grads/msphd-requirements"
+                                        target="_blank">MS/PhD track</a>.
+                                </li>
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">4</sup>
+                                    For example, if 90% are working but 50% are unknown, it's more accurate to assume that closer to 40% are working.
+                                </li>
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">5</sup>
+                                    Based on compensation data known for 20% of those working; represents 25-50 percentile to offset known bias that those who report salary tend to be above average.
+                                </li>
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">6</sup>
+                                    Numerous graduates have also pursued opportunities internationally. Remote work continues to be popular. Created with mapchart.net.
+                                </li>
+
+                                <!-- <li class="list-unstyled m-2 small-text">
+                                <sup class="text-secondary d-inline-block text-center" style="width: 15px">4</sup>
+                                Many offers also include bonuses and equity in total compensation.
+                            </li> -->
+                                <!-- <li class="list-unstyled m-2 small-text">
+                                <sup class="text-secondary d-inline-block text-center" style="width: 15px">5</sup>
+                                Based on replies to the question "Are you satisfied with your post-graduate plans?" from the Careers
+                                Survey.
+                            </li> -->
+                                <!-- <li class="list-unstyled m-2 small-text">
+                                <sup class="text-secondary d-inline-block text-center" style="width: 15px">4</sup>
+                                Remote work continues to be popular.
+                            </li> -->
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-phd" role="tabpanel" aria-labelledby="pills-phd-tab" tabindex="0">
+                <div id="phd" class="padded-section">
+
+                    <div class="small-padded-section text-center">
+                        <h1>Manning CICS PhDs</h1>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="small-padded-section row">
+                    <ul class="list-unstyled quick-stats offset-md-1">
+                        <li>
+                            <i class="fa-solid fa-user-graduate"></i> <span
+	                                style="font-weight: bold">45 PhD students</span> in the Class of 2026
+                        </li>
+                        <li class="ms-3">
+                            <i class="fa-solid fa-calendar-alt fa-fw"></i> <span
+	                                style="font-weight: bold">5</span> graduated before 2026
+                        </li>
+                        <li class="ms-3">
+                            <i class="fa-solid fa-calendar-alt fa-fw"></i> <span
+	                                style="font-weight: bold">2</span> graduated in Jan/Feb 2026
+                        </li>
+                        <li class="ms-3">
+                            <i class="fa-solid fa-calendar-alt fa-fw"></i> <span
+	                                style="font-weight: bold">38</span> graduated in May 2026 or later
+                        </li>
+                    </ul>
+                </div>
+
+                    <!-- Destinations Chart and Breakdown -->
+                    <div class="padded-section row">
+                        <div class="col-12 col-md-6 col-lg-7 offset-xl-1 col-xl-5">
+                            <div class="position-relative" style="height: 100%">
+	                                <canvas id="PhDChart2026"></canvas>
+                                <div class="text-center text-in-donut">
+                                    <h4 class="m-0">Outcomes 
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-5 col-xl-5">
+                            <div class="fillin"></div>
+                            <div class="callout">
+                                <div class="callout-working-header">
+	                                    <h3 class="m-1"><i class="fa-solid fa-briefcase fa-fw"></i>&nbsp;36% Working
+                                    </h3>
+                                </div>
+                                <div class="callout-container">
+                                    <p class="m-1">
+	                                        <span style="font-weight: bold">16</span> PhD graduates are marked as working. Employer names are report-ready for 15 of these records.
+                                        <!-- One is teaching at <span style="font-weight: bold">Mount Holyoke College</span>
+                                        and <span style="font-weight: bold">52%</span> of those choosing industry joined
+                                        a
+                                        <a href="https://ds.cs.umass.edu/programs/industry-affiliates-program">Center
+                                            for
+                                            Data
+                                            Science partner</a> -->
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- <div class="callout">
+                            <div class="callout-academia-header">
+                                <h3 class="m-1"><i class="fa-solid fa-university fa-fw"></i>&nbsp;7% Working in Academia
+                                </h3>
+                            </div>
+                            <div class="callout-container">
+                                <p class="m-1">Alumni Employed at Top Universities: <span style="font-weight: bold">Mount Holyoke College</span>
+                                </p>
+                            </div>
+                        </div> -->
+                            <div class="callout">
+                                <div class="callout-continuing-ed-header">
+	                                    <h3 class="m-1"><i class="fa-solid fa-user-graduate fa-fw"></i>&nbsp;11% Continuing Education<sup class="small-super-text">2</sup></h3>
+                                </div>
+                                <div class="callout-container">
+	                                    <p class="m-1"><span style="font-weight: bold">5</span> PhD graduates are marked as continuing education. Detailed post-doc/faculty placement data is pending.</p>
+                                </div>
+                            </div>
+                            <div class="callout">
+                                <div class="callout-unknown-header">
+	                                    <h3 class="m-1"><i class="fa-solid fa-question fa-fw"></i>&nbsp;40% Unknown</h3>
+                                </div>
+                                <div class="callout-container">
+	                                    <p class="m-1">We know post-graduation outcomes for 60% of our PhD graduates, but <span
+	                                            style="font-weight: bold">18</span> remain unknown.</p>
+                                </div>
+                            </div>
+                            <div class="callout">
+                                <div class="callout-looking-header">
+	                                    <h3 class="m-1"><i class="fa-solid fa-magnifying-glass fa-fw"></i>&nbsp;13% Looking
+                                    </h3>
+                                </div>
+                                <div class="callout-container">
+                                    <p class="m-1">These alumni are searching for their next opportunity with the ongoing
+                                        support of CICS Careers. <span style="font-weight: bold">We help alumni for life.</span></p>
+                                </div>
+                            </div>
+                            <div class="fillin"></div>
+                        </div>
+                    </div>
+
+                    <!-- Employers -->
+                    <div class="padded-section">
+	                        <h3>10 Report-Ready Employers and Institutions (2 Hired Multiple)</h3>
+	                        <div class="text-callout callout-default">Logo carousel pending final 2026 curation.</div>
+	                        <p class="small-text">Top report-ready PhD employers and institutions include Meta, Amazon, Princeton, Foundation EGI, Stripe, Youngstown State University, Stonehill College, Penn State University, Fortranix, and Evidium.</p>
+<div class="logo-scroll-wrapper position-relative" data-autoscroll="true">
+                        <!-- Left Arrow -->
+                        <button class="scroll-btn left" type="button" aria-label="Scroll left">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <div class="logo-scroll">
+                            <div class="row flex-nowrap m-0"> 
+                            
+                        <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                             data-placement="top"
+                             title="Netflix">
+                            <img src="img/Netflix_Logo_RGB.png" class="img-fluid p-2" alt="Netflix">
+                        </div>
+                        <div class="col-4 col-sm-3 col-md-2  d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Etsy">
+                                <img src="img/Etsy-Logo.png" class="img-fluid p-2" alt="Etsy">
+                            </div>
+                        <div class="col-4 col-sm-3 col-md-2  d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Meta">
+                                <img src="img/Meta_Platforms_Inc._logo.svg.png" class="img-fluid p-2" alt="Meta">
+                            </div>
+                        <div class="col-4 col-sm-3 col-md-2  d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Capital One">
+                                <img src="img/Capital-One-Logo.jpg" class="img-fluid p-2" alt="Capital One">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2  d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Deeproute.ai">
+                                <img src="img/deeprouteai.jpg" class="img-fluid p-2" alt="Deeproute.ai">
+                            </div>
+      <div class="col-4 col-sm-3 col-md-2  d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Snowflake">
+                                <img src="img/snowflake.jpg" class="img-fluid p-2" alt="Snowflake">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2  d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Amazon">
+                                <img src="img/Amazon_logo.svg.png" class="img-fluid p-2" alt="Amazon">
+                            </div>
+                             <div class="col-4 col-sm-3 col-md-2  d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="UMass Amherst">
+                                <img src="img/UMassAmherst_logo.png" class="img-fluid p-2" alt="UMass Amherst">
+                            </div> 
+                            <div class="col-4 col-sm-3 col-md-2  d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="SRI International">
+                                <img src="img/sri-international.png" class="img-fluid p-2" alt="SRI International">
+                            </div>
+                             <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="United Health Group">
+                                <img src="img/unitedHealthGroup.jpg" class="img-fluid p-2" alt="United Health Group">
+                            </div> 
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Microsoft">
+                                <img src="img/Microsoft_logo_(2012).svg.png" class="img-fluid p-2" alt="Microsoft">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Google">
+                                <img src="img/google-logo.png" class="img-fluid p-2" alt="Google">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Max Planck Institute for Intelligent Systems ">
+                                <img src="img/maxPlank.jpg" class="img-fluid p-2" alt="Max Planck Institute for Intelligent Systems ">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="University of Maryland, Baltimore">
+                                <img src="img/University_Maryland.webp" class="img-fluid p-2" alt="University of Maryland Baltimore">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="University of Texas at Arlington">
+                                <img src="img/UTA.jpg" class="img-fluid p-2" alt="University of Texas at Arlington">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Seoul National University">
+                                <img src="img/seoulNationalUniversity.png" class="img-fluid p-2" alt="Seoul National University">
+                            </div>
+                            <div class="col-4 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Smith College">
+                                <img src="img/smithCollege.jpg" class="img-fluid p-2" alt="Smith College">
+                            </div>
+                            <div class="col-4 col-sm-3 col-md-2 d-flex align-items-center" data-toggle="tooltip"
+                                data-placement="top" title="Xpeng">
+                                <img src="img/xpeng.jpg" class="img-fluid p-2" alt="Xpeng">
+                            </div>
+                            
+                        </div>
+                            <button class="scroll-btn right" type="button" aria-label="Scroll right">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                            </div>
+                        </div>
+                    </div>
+
+	                    <div class="text-center small-padded-section popular-roles-wrap">
+	                        <h3>Popular Job Roles</h3>
+	                        <div id="phd-roles-wordcloud-2026" class="roles-wordcloud"></div>
+	                    </div> 
+
+                    <div class="container footer small-padded-section">
+                        <!-- Careers Survey -->
+
+                        <!-- Thank You -->
+                        <div class="blockquote-footer small-padded-section mt-5">
+                            <h3 class="text-center">Thanks for being part of our CICS Career Community!</h3>
+                        </div>
+
+                        <!-- Footnotes -->
+                        <div class="padded-section">
+                            <h6>Notes</h6>
+                            <ul class="p-0 padded-section">
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">1</sup>
+                                    Data points were collected through the Careers Survey, Graduation Celebration
+                                    Registrations, LinkedIn
+                                    Profiles and Staff Knowledge.
+                                </li>
+                                <!-- <li class="list-unstyled m-2 small-text">
+                                <sup class="text-secondary d-inline-block text-center" style="width: 15px">2</sup>
+                                10 undergraduate students graduated in August, 132 in December, and 298 in May. Graduate students also
+                                graduated in August (11), February (24), and May (89).
+                            </li> -->
+                                <li class="list-unstyled m-2 small-text">
+                                    <sup class="text-secondary d-inline-block text-center" style="width: 15px">2</sup>
+                                    Continuing Ed doesn't include <a
+                                        href="https://www.cics.umass.edu/academics/academic-policies/graduate-programs-policies/msphd-degree-requirements"
+                                        target="_blank">MS/PhD track</a>.
+                                </li>
+                                <!-- <li class="list-unstyled m-2 small-text">
+                                <sup class="text-secondary d-inline-block text-center" style="width: 15px">4</sup>
+                                Many offers also include bonuses and equity in total compensation.
+                            </li> -->
+                                <!-- <li class="list-unstyled m-2 small-text">
+                                <sup class="text-secondary d-inline-block text-center" style="width: 15px">5</sup>
+                                Based on replies to the question "Are you satisfied with your post-graduate plans?" from the Careers
+                                Survey.
+                            </li> -->
+                                <!-- <li class="list-unstyled m-2 small-text">
+                                <sup class="text-secondary d-inline-block text-center" style="width: 15px">3</sup>
+                                Remote work continues to be popular.
+                            </li> -->
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+
+
+    </div>
+
+
+
+    <!-- Scripts for JS Libraries -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.1/chart.umd.js"
+        integrity="sha512-+Aecf3QQcWkkA8IUdym4PDvIP/ikcKdp4NCDF8PM6qr9FtqwIFCS3JAcm2+GmPMZvnlsrGv1qavSnxL8v+o86w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+
+    <script src="https://apis.google.com/js/api.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+
+    <script src="./js/index.js"></script>
+    <script src="./js/sunburst.js"></script>
+    <script src="./js/anychartSunburst.js"></script>
+    <script src="./js/wordcloud.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+</body>
+
+</html>

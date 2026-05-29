@@ -33,10 +33,16 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
+      - name: Prepare Pages artifact
+        run: |
+          mkdir site
+          cp index.html 2022.html 2023.html 2024.html 2026.html site/
+          cp -R css js img iframe site/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: '.'
+          path: 'site'
 
       - name: Deploy to GitHub Pages
         id: deployment

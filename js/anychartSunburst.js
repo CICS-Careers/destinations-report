@@ -1,6 +1,8 @@
 ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
 anychart.onDocumentReady(function () {
   function createSunburstChart(containerId, chartData) {
+    if (!document.getElementById(containerId)) return null;
+
     // var palette1 = ['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1'];
     var palette2 = ['#955251', '#B565A7', '#92A8D1', '#009B77', '#DD4324', '#45B8AC', '#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9'];
 

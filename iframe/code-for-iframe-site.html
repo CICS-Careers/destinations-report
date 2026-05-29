@@ -1,5 +1,7 @@
 <div id="iframeContainer"><iframe id="reportIframe" scrolling="no" src="https://destinations.ltseng.me" style="border: none" title="Inline Frame Example" width="100%"></iframe></div>
 <script>
+  const REPORT_ORIGIN = "https://destinations.ltseng.me";
+
   // https://stackoverflow.com/questions/34863788/how-to-check-if-an-element-has-been-loaded-on-a-page-before-running-a-script
   /**
    * Wait for an element before resolving a promise
@@ -29,6 +31,8 @@
   }
 
   window.addEventListener("message", function(e) {
+    if (e.origin !== REPORT_ORIGIN) return;
+
     console.log("Window height & width received from iframe!");
     console.log(e.data);
 
@@ -56,6 +60,8 @@
   });
 
   window.addEventListener("message", function(e) {
+    if (e.origin !== REPORT_ORIGIN) return;
+
     console.log(e.data);
     let anchor = e.data['setAnchor'];
     let offset = e.data['offset'];
@@ -73,7 +79,7 @@
   function sendHash() {
     let hash = window.location.hash.substring(1);
     let iframe = document.getElementById("reportIframe");
-    iframe.contentWindow.postMessage({"findElement": hash}, '*');
+    iframe.contentWindow.postMessage({"findElement": hash}, REPORT_ORIGIN);
     // reset
     window.location.hash = "";
   }

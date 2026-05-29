@@ -49,6 +49,13 @@ const PhDLabels2025 = [
     'Looking'
 ];
 
+const PhDLabels2026 = [
+    'Working',
+    'Continuing Education',
+    'Looking',
+    'Unknown'
+];
+
 const UGradLabels2024 = [
     'Working',
     'Continuing Education',
@@ -117,6 +124,23 @@ const MSdata2025 = {
         hoverOffset: 4
     }]
 };
+
+const MSdata2026 = {
+    labels: Labels,
+    datasets: [{
+        label: ' Number of Students',
+        data: [94, 11, 108, 62, 3],
+        backgroundColor: [
+            UMassColors.GREEN,
+            UMassColors.TEAL,
+            UMassColors.MAROON,
+            UMassColors.LIGHTGRAY,
+            UMassColors.ORANGE
+        ],
+        hoverOffset: 5
+    }]
+};
+
 const MSdataKR = {
     labels: LabelsKR,
     datasets: [{
@@ -220,6 +244,26 @@ const UGdata2025 = {
     },
 };
 
+const UGdata2026 = {
+    labels: UGradLabels2024,
+    datasets: [{
+        label: ' Number of Students',
+        data: [103, 112, 130, 159, 1],
+        backgroundColor: [
+            UMassColors.GREEN,
+            UMassColors.TEAL,
+            UMassColors.MAROON,
+            UMassColors.LIGHTGRAY,
+            UMassColors.ORANGE
+        ],
+        hoverOffset: 5
+    }],
+    legend: {
+        display: false,
+    },
+};
+
+
 const PhDdata = {
     labels: PhDLabels,
     datasets: [{
@@ -288,6 +332,49 @@ const PhDdata2025 = {
         display: false,
     },
 };
+
+const PhDdata2026 = {
+    labels: PhDLabels2026,
+    datasets: [{
+        label: ' Number of Students',
+        data: [16, 5, 6, 18],
+        backgroundColor: [
+            UMassColors.GREEN,
+            UMassColors.TEAL,
+            UMassColors.MAROON,
+            UMassColors.LIGHTGRAY
+        ],
+        hoverOffset: 4
+    }],
+    legend: {
+        display: false,
+    },
+};
+
+function createDoughnutConfig(data) {
+    return {
+        type: 'doughnut',
+        data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                datalabels: {
+                    formatter: (value, ctx) => value + "\n" + ctx.chart.data.labels[ctx.dataIndex],
+                    color: "#fff",
+                    textAlign: "center",
+                    font: {
+                        family: "'Public Sans', Arial, Helvetica, sans-serif",
+                        size: 14
+                    }
+                }
+            }
+        }
+    };
+}
 
 const configMS = {
     type: 'doughnut',
@@ -630,6 +717,8 @@ const configUG2025 = {
     }
 };
 
+const configUG2026 = createDoughnutConfig(UGdata2026);
+
 const configPhD = {
     type: 'doughnut',
     data: PhDdata,
@@ -766,6 +855,9 @@ const configPhD2025 = {
         }
     }
 };
+
+const configMS2026 = createDoughnutConfig(MSdata2026);
+const configPhD2026 = createDoughnutConfig(PhDdata2026);
 const PhDChart = document.getElementById('PhDChart') && new Chart(
     document.getElementById('PhDChart'),
     configPhD
@@ -782,6 +874,10 @@ const PhDChart2025 = document.getElementById('PhDChart2025') && new Chart(
     document.getElementById('PhDChart2025'),
     configPhD2025
 );
+const PhDChart2026 = document.getElementById('PhDChart2026') && new Chart(
+    document.getElementById('PhDChart2026'),
+    configPhD2026
+);
 const MSChart = document.getElementById('MSChart') && new Chart(
     document.getElementById('MSChart'),
     configMS
@@ -797,6 +893,10 @@ const MSChart2024 = document.getElementById('MSChart2024') && new Chart(
 const MSChart2025 = document.getElementById('MSChart2025') && new Chart(
     document.getElementById('MSChart2025'),
     configMS2025
+);
+const MSChart2026 = document.getElementById('MSChart2026') && new Chart(
+    document.getElementById('MSChart2026'),
+    configMS2026
 );
 
 
@@ -817,6 +917,10 @@ const UGChart2024 = document.getElementById('UGChart2024') && new Chart(
 const UGChart2025 = document.getElementById('UGChart2025') && new Chart(
     document.getElementById('UGChart2025'),
     configUG2025
+);
+const UGChart2026 = document.getElementById('UGChart2026') && new Chart(
+    document.getElementById('UGChart2026'),
+    configUG2026
 );
 
 const MSChartKR = document.getElementById('MSChartKR') && new Chart(
@@ -842,6 +946,36 @@ const headlines = [
 
 // --- START OF FIXED LOGIC AT THE BOTTOM OF THE FILE ---
 
+const TRUSTED_MESSAGE_ORIGINS = new Set([
+    "https://www.cics.umass.edu",
+    "https://destinations.ltseng.me"
+]);
+
+function getReferrerOrigin() {
+    if (!document.referrer) return null;
+
+    try {
+        return new URL(document.referrer).origin;
+    } catch (error) {
+        return null;
+    }
+}
+
+function getParentTargetOrigin() {
+    const referrerOrigin = getReferrerOrigin();
+    if (referrerOrigin) return referrerOrigin;
+
+    return window.location.protocol === "file:" ? "*" : window.location.origin;
+}
+
+function isTrustedMessageOrigin(event) {
+    const referrerOrigin = getReferrerOrigin();
+
+    return event.origin === window.location.origin ||
+        event.origin === referrerOrigin ||
+        TRUSTED_MESSAGE_ORIGINS.has(event.origin);
+}
+
 // Window Load Event for Navigation Messages
 window.addEventListener("load", (e) => {
     const message = {
@@ -849,7 +983,7 @@ window.addEventListener("load", (e) => {
         width: window.document.body.scrollWidth
     }
 
-    window.top.postMessage(message, "*");
+    window.top.postMessage(message, getParentTargetOrigin());
 
     // FIXED CLICK HANDLER
     $(".nav-link").on("click", function (e) {
@@ -866,19 +1000,21 @@ window.addEventListener("load", (e) => {
             e.preventDefault();
             window.top.postMessage({
                 "setAnchor": href.split('/').pop().substring(1)
-            }, "*")
+            }, getParentTargetOrigin())
         }
     });
 });
 
 window.addEventListener("message", (e) => {
+    if (!isTrustedMessageOrigin(e)) return;
+
     let anchor = e.data["findElement"];
     if (anchor !== undefined) {
         let element = $(`#${anchor}`);
         if(element.length > 0) {
              window.top.postMessage({
                 "offset": element.offset().top
-            }, "*")
+            }, getParentTargetOrigin())
         }
     }
 })
