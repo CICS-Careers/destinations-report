@@ -246,16 +246,20 @@ const UGdata2025 = {
 };
 
 const UGdata2026 = {
-    labels: UGradLabels2024,
+    labels: [
+        'Working',
+        'Continuing Education',
+        'Looking',
+        'Unknown'
+    ],
     datasets: [{
         label: ' Number of Students',
-        data: [42, 42, 29, 11, 0],
+        data: [42, 42, 29, 11],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
             UMassColors.MAROON,
-            UMassColors.LIGHTGRAY,
-            UMassColors.ORANGE
+            UMassColors.LIGHTGRAY
         ],
         hoverOffset: 5
     }],
