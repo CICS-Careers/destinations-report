@@ -125,11 +125,12 @@ const MSdata2025 = {
     }]
 };
 
+// 2026 top outcome charts include summer/winter graduates and exclude May spring graduates.
 const MSdata2026 = {
     labels: Labels,
     datasets: [{
         label: ' Number of Students',
-        data: [94, 11, 108, 62, 3],
+        data: [44, 7, 14, 4, 3],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
@@ -248,7 +249,7 @@ const UGdata2026 = {
     labels: UGradLabels2024,
     datasets: [{
         label: ' Number of Students',
-        data: [103, 112, 130, 159, 1],
+        data: [41, 43, 29, 11, 0],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
@@ -337,7 +338,7 @@ const PhDdata2026 = {
     labels: PhDLabels2026,
     datasets: [{
         label: ' Number of Students',
-        data: [16, 5, 6, 18],
+        data: [15, 5, 6, 2],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
