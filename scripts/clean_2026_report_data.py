@@ -7,7 +7,7 @@ from pathlib import Path
 from openpyxl import load_workbook
 
 
-SOURCE = Path("/Users/rohanpandey/Desktop/CICS/Hypercare 2026 Dashboard Enhanced.xlsx")
+SOURCE = Path("/Users/rohanpandey/Desktop/CICS/Hypercare 2026_2Jun.xlsx")
 OUTPUT_DIR = Path("data/2026")
 CLEANED_TRACKER = OUTPUT_DIR / "report_data_cleaned.csv"
 SUMMARY = OUTPUT_DIR / "cleanup_summary.md"
@@ -182,6 +182,8 @@ def clean_degree(value):
 
 def clean_state(state_value, location_value):
     state = normalize_space(state_value).upper()
+    if state.startswith("="):
+        state = ""
     state = STATE_ALIASES.get(state, state)
     if state:
         return state
@@ -211,13 +213,20 @@ def read_tracker_rows():
         formula_record = dict(zip(headers, formula_row))
         value_record = dict(zip(headers, value_row))
 
-        raw = {header: formula_fallback(formula_record.get(header)) for header in headers}
         cached = {header: normalize_space(value_record.get(header)) for header in headers}
+        raw = {}
+        for header in headers:
+            value = formula_fallback(formula_record.get(header))
+            if isinstance(value, str) and value.startswith("=") and cached.get(header):
+                value = cached[header]
+            raw[header] = value
         yield row_number, raw, cached
 
 
 def read_dashboard_work_auth_rows():
     workbook = load_workbook(SOURCE, read_only=True, data_only=True)
+    if "Dashboard_Data" not in workbook.sheetnames:
+        return []
     sheet = workbook["Dashboard_Data"]
     rows = list(sheet.iter_rows(values_only=True))
     start = None

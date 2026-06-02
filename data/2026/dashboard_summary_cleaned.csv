@@ -1,14 +1,9 @@
 section,group,total,Working,Looking,Continuing Education,Unknown,Not Seeking
-all,All Students,828,213,244,128,239,4
-program,Undergraduate,505,103,130,112,159,1
-program,MS,278,94,108,11,62,3
+all,All Students,828,218,243,127,236,4
+program,Undergraduate,505,105,129,111,159,1
+program,MS,278,97,108,11,59,3
 program,PhD,45,16,6,5,18,0
 degree_confer_date,2025-09-01 00:00:00,43,34,3,4,1,1
-degree_confer_date,2026-01-01 00:00:00,172,64,44,47,15,2
+degree_confer_date,2026-01-01 00:00:00,172,66,44,46,14,2
 degree_confer_date,2026-02-01 00:00:00,9,2,2,4,1,0
-degree_confer_date,2026-05-01 00:00:00,603,113,195,72,222,1
-degree_confer_date,2027-05-01 00:00:00,1,0,0,1,0,0
-work_authorization,U.S. Citizen,427,126,95,68,136,2
-work_authorization,Student (F-1) Visa,324,68,133,43,78,2
-work_authorization,Permanent U.S. Resident,43,16,8,9,10,0
-work_authorization,Other / Missing,34,3,8,8,15,0
+degree_confer_date,2026-05-01 00:00:00,604,116,194,73,220,1
