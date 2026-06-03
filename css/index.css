@@ -29,6 +29,37 @@ div.small-padded-section {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: min(42%, 11rem);
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+    pointer-events: none;
+}
+
+.outcome-donut-wrap {
+    height: clamp(280px, 30vw, 360px) !important;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.text-in-donut h4 {
+    font-size: 1.1rem;
+    line-height: inherit;
+}
+
+@media screen and (max-width: 991px) {
+    .text-in-donut {
+        width: min(46%, 10rem);
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .outcome-donut-wrap {
+        height: 250px !important;
+    }
+
+    .text-in-donut h4 {
+        font-size: 1rem;
+    }
 }
 
 .small-text {

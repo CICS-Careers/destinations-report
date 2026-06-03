@@ -363,6 +363,10 @@ function createDoughnutConfig(data) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+                padding: 16
+            },
+            cutout: '58%',
             plugins: {
                 legend: {
                     display: false
@@ -862,6 +866,44 @@ const configPhD2025 = {
 };
 
 const configMS2026 = createDoughnutConfig(MSdata2026);
+configMS2026.options.layout.padding = {
+    top: 40,
+    right: 36,
+    bottom: 18,
+    left: 36
+};
+configMS2026.options.plugins.datalabels.formatter = (value, ctx) => {
+    const label = ctx.chart.data.labels[ctx.dataIndex];
+    if (label === 'Continuing Education') return value + "\nCont. Ed.";
+    return value + "\n" + (label === 'Not Seeking' ? 'Not\nSeeking' : label);
+};
+configMS2026.options.plugins.datalabels.anchor = (ctx) => {
+    return ctx.dataIndex >= 3 ? 'end' : 'center';
+};
+configMS2026.options.plugins.datalabels.align = (ctx) => {
+    if (ctx.dataIndex === 3) return 'left';
+    if (ctx.dataIndex === 4) return 'right';
+    return 'center';
+};
+configMS2026.options.plugins.datalabels.offset = (ctx) => {
+    return ctx.dataIndex >= 3 ? 12 : 0;
+};
+configMS2026.options.plugins.datalabels.backgroundColor = (ctx) => {
+    return ctx.dataIndex >= 3 ? ctx.dataset.backgroundColor[ctx.dataIndex] : null;
+};
+configMS2026.options.plugins.datalabels.borderRadius = (ctx) => {
+    return ctx.dataIndex >= 3 ? 4 : 0;
+};
+configMS2026.options.plugins.datalabels.padding = (ctx) => {
+    return ctx.dataIndex >= 3 ? 4 : 0;
+};
+configMS2026.options.plugins.datalabels.clip = false;
+configMS2026.options.plugins.datalabels.font = (ctx) => {
+    return {
+        family: "'Public Sans', Arial, Helvetica, sans-serif",
+        size: ctx.dataIndex >= 3 ? 12 : 14
+    };
+};
 const configPhD2026 = createDoughnutConfig(PhDdata2026);
 const PhDChart = document.getElementById('PhDChart') && new Chart(
     document.getElementById('PhDChart'),
