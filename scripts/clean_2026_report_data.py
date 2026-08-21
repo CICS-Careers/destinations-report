@@ -1,17 +1,24 @@
 #!/usr/bin/env python3
+import argparse
 import csv
+import hashlib
+import json
 import re
 from collections import Counter, defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
 
 from openpyxl import load_workbook
 
 
-SOURCE = Path("/Users/rohanpandey/Desktop/CICS/Hypercare 2026_2Jun.xlsx")
-OUTPUT_DIR = Path("data/2026")
+SOURCE = Path()
+OUTPUT_DIR = Path()
 CLEANED_TRACKER = OUTPUT_DIR / "report_data_cleaned.csv"
 SUMMARY = OUTPUT_DIR / "cleanup_summary.md"
 OUTCOME_SUMMARY = OUTPUT_DIR / "dashboard_summary_cleaned.csv"
+REVIEW_QUEUE = OUTPUT_DIR / "review_queue.csv"
+NORMALIZATION_AUDIT = OUTPUT_DIR / "normalization_audit.csv"
+MANIFEST = OUTPUT_DIR / "release_manifest.json"
 
 IFERROR_STRING_FALLBACK = re.compile(r'\),"((?:""|[^"])*)"\)$')
 IFERROR_NUMBER_FALLBACK = re.compile(r"\),([0-9]+(?:\.[0-9]+)?)\)$")
@@ -39,6 +46,7 @@ EMPLOYER_ALIASES = {
     "the mathworks, inc.": "MathWorks",
     "athenahealth": "athenahealth",
     "athena health": "athenahealth",
+    "guideware software": "Guidewire",
 }
 
 SCHOOL_ALIASES = {
@@ -51,6 +59,7 @@ SCHOOL_ALIASES = {
     "umass amherst": "UMass Amherst",
     "umass cics": "UMass Amherst",
     "umass graduate school": "UMass Amherst",
+    "umass amherst isenberg msba": "UMass Amherst",
     "university of massachusetts amherst": "UMass Amherst",
     "northeastern ms cs": "Northeastern University",
     "georgia institute of technology": "Georgia Institute of Technology",
@@ -61,6 +70,12 @@ SCHOOL_ALIASES = {
     "uiuc": "University of Illinois Urbana-Champaign",
     "nyu courant (cds)": "NYU",
     "carnegie mellon": "Carnegie Mellon University",
+}
+
+MAJOR_ALIASES = {
+    "computer science(bs)": "Computer Science BS",
+    "computer science(ba)": "Computer Science BA",
+    "informatics(bs)": "Informatics BS",
 }
 
 ROLE_ALIASES = {
@@ -88,8 +103,15 @@ ROLE_ALIASES = {
 }
 
 STATE_ALIASES = {
-    "A": "",
-    "A ": "",
+    "A": "MA",
+    "AD": "MD",
+    "AS": "TX",
+    "HO": "ID",
+    "INT'L": "",
+    "INTL": "",
+    "LL": "MA",
+    "N/A": "",
+    "NA": "",
     "CALIFORNIA": "CA",
     "MASSACHUSETTS": "MA",
     "WASHINGTON": "WA",
@@ -106,6 +128,25 @@ STATE_ALIASES = {
 }
 
 STATE_FROM_LOCATION = re.compile(r"(?:,\s*|\s+)([A-Z]{2})\s*$")
+
+REQUIRED_TRACKER_HEADERS = {
+    "Program",
+    "Email",
+    "Degree Confer Date",
+    "Outcomes Status",
+    "Employer",
+    "Role",
+    "Location",
+    "Location - State",
+    "School Name",
+    "Degree",
+    "Majors Name",
+    "LinkedIn",
+    "LI LookUp Date",
+    "Careers Survey Timestamp",
+    "Interactions",
+    "Doc Reviews",
+}
 
 
 def normalize_space(value):
@@ -184,11 +225,13 @@ def clean_state(state_value, location_value):
     state = normalize_space(state_value).upper()
     if state.startswith("="):
         state = ""
+    location = normalize_space(location_value)
+    if state == "IA" and "india" in location.lower():
+        return ""
     state = STATE_ALIASES.get(state, state)
     if state:
         return state
 
-    location = normalize_space(location_value)
     match = STATE_FROM_LOCATION.search(location)
     if match:
         return match.group(1).upper()
@@ -216,11 +259,46 @@ def read_tracker_rows():
         cached = {header: normalize_space(value_record.get(header)) for header in headers}
         raw = {}
         for header in headers:
-            value = formula_fallback(formula_record.get(header))
-            if isinstance(value, str) and value.startswith("=") and cached.get(header):
+            formula_value = formula_record.get(header)
+            value = formula_fallback(formula_value)
+            # Array formulas are returned as openpyxl objects rather than strings.
+            # Their cached values are the reportable values in this workbook.
+            if cached.get(header) and (
+                not isinstance(formula_value, (str, int, float, bool, datetime))
+                or (isinstance(formula_value, str) and formula_value.startswith("="))
+            ):
                 value = cached[header]
             raw[header] = value
         yield row_number, raw, cached
+
+
+def validate_input_workbook():
+    """Fail early when the approved workbook no longer matches the data contract."""
+    workbook = load_workbook(SOURCE, read_only=True, data_only=False)
+    if "TRACKER" not in workbook.sheetnames:
+        raise ValueError("Input workbook is missing the required TRACKER sheet")
+
+    worksheet = workbook["TRACKER"]
+    headers = {normalize_space(value) for value in next(worksheet.iter_rows(values_only=True))}
+    missing_headers = sorted(REQUIRED_TRACKER_HEADERS - headers)
+    if missing_headers:
+        raise ValueError(
+            "Input workbook TRACKER sheet is missing required columns: "
+            + ", ".join(missing_headers)
+        )
+
+
+def sha256(path):
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def stable_record_key(email):
+    """Private, deterministic key for matching protected exports across releases."""
+    return hashlib.sha256(normalize_space(email).lower().encode("utf-8")).hexdigest()
 
 
 def read_dashboard_work_auth_rows():
@@ -256,6 +334,7 @@ def read_dashboard_work_auth_rows():
 
 def build_outputs():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    validate_input_workbook()
 
     cleaned_rows = []
     for row_number, raw, cached in read_tracker_rows():
@@ -264,6 +343,7 @@ def build_outputs():
         role_report = canonicalize(raw["Role"], ROLE_ALIASES)
         school_report = canonicalize(raw["School Name"], SCHOOL_ALIASES)
         degree_report = clean_degree(raw["Degree"])
+        major_report = canonicalize(raw["Majors Name"], MAJOR_ALIASES)
         state_report = clean_state(raw["Location - State"], raw["Location"])
         flags = []
         if outcome_report == "Working" and not employer_report:
@@ -277,6 +357,7 @@ def build_outputs():
 
         cleaned_rows.append({
             "source_row": row_number,
+            "record_key": stable_record_key(raw["Email"]),
             "program": raw["Program"],
             "degree_confer_date": raw["Degree Confer Date"],
             "outcome_raw": raw["Outcomes Status"],
@@ -291,6 +372,8 @@ def build_outputs():
             "school_report": school_report,
             "degree_raw": raw["Degree"],
             "degree_report": degree_report,
+            "major_raw": raw["Majors Name"],
+            "major_report": major_report,
             "location_raw": raw["Location"],
             "state_raw": raw["Location - State"],
             "state_report": state_report,
@@ -310,6 +393,9 @@ def build_outputs():
 
     write_dashboard_summary(cleaned_rows)
     write_summary(cleaned_rows)
+    write_review_queue(cleaned_rows)
+    write_normalization_audit(cleaned_rows)
+    write_manifest(cleaned_rows)
 
 
 def counter_for(rows, field):
@@ -351,6 +437,74 @@ def write_dashboard_summary(rows):
                 row["Not Seeking"],
             ])
 
+
+def write_review_queue(rows):
+    """Write only records needing human review to the private output directory."""
+    fields = [
+        "source_row", "program", "degree_confer_date", "outcome_report",
+        "employer_raw", "employer_report", "role_raw", "role_report",
+        "school_raw", "school_report", "location_raw", "state_raw",
+        "state_report", "major_raw", "major_report", "cleanup_flags",
+    ]
+    with REVIEW_QUEUE.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(
+            {field: row[field] for field in fields}
+            for row in rows
+            if row["cleanup_flags"]
+        )
+
+
+def write_normalization_audit(rows):
+    """Summarize every changed value so reviewers can approve the cleaning rules."""
+    mappings = [
+        ("outcome", "outcome_raw", "outcome_report"),
+        ("employer", "employer_raw", "employer_report"),
+        ("role", "role_raw", "role_report"),
+        ("school", "school_raw", "school_report"),
+        ("degree", "degree_raw", "degree_report"),
+        ("major", "major_raw", "major_report"),
+        ("state", "state_raw", "state_report"),
+    ]
+    counts = Counter()
+    for row in rows:
+        for field, raw_key, normalized_key in mappings:
+            raw_value = row[raw_key]
+            normalized_value = row[normalized_key]
+            if raw_value and raw_value != normalized_value:
+                counts[(field, raw_value, normalized_value)] += 1
+
+    with NORMALIZATION_AUDIT.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=["field", "raw_value", "normalized_value", "record_count"],
+        )
+        writer.writeheader()
+        for (field, raw_value, normalized_value), count in sorted(counts.items()):
+            writer.writerow({
+                "field": field,
+                "raw_value": raw_value,
+                "normalized_value": normalized_value,
+                "record_count": count,
+            })
+
+
+def write_manifest(rows):
+    manifest = {
+        "source_file": SOURCE.name,
+        "source_sha256": sha256(SOURCE),
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "row_count": len(rows),
+        "outputs": [
+            CLEANED_TRACKER.name,
+            OUTCOME_SUMMARY.name,
+            SUMMARY.name,
+            REVIEW_QUEUE.name,
+            NORMALIZATION_AUDIT.name,
+        ],
+    }
+    MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
 def markdown_count_table(title, counts, limit=15):
     lines = [f"### {title}", "", "| Value | Count |", "|---|---:|"]
@@ -404,4 +558,27 @@ def write_summary(rows):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Clean a sensitive CICS outcomes workbook into private review artifacts."
+    )
+    parser.add_argument("--input", type=Path, required=True, help="Path to the approved source workbook")
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        required=True,
+        help="Private directory for generated row-level and review artifacts",
+    )
+    args = parser.parse_args()
+
+    if not args.input.is_file():
+        parser.error(f"input workbook not found: {args.input}")
+
+    SOURCE = args.input.resolve()
+    OUTPUT_DIR = args.output_dir.resolve()
+    CLEANED_TRACKER = OUTPUT_DIR / "report_data_cleaned.csv"
+    SUMMARY = OUTPUT_DIR / "cleanup_summary.md"
+    OUTCOME_SUMMARY = OUTPUT_DIR / "dashboard_summary_cleaned.csv"
+    REVIEW_QUEUE = OUTPUT_DIR / "review_queue.csv"
+    NORMALIZATION_AUDIT = OUTPUT_DIR / "normalization_audit.csv"
+    MANIFEST = OUTPUT_DIR / "release_manifest.json"
     build_outputs()
