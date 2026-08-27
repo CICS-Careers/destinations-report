@@ -12,6 +12,8 @@ from openpyxl import load_workbook
 
 
 SOURCE = Path()
+EMPLOYER_DASHBOARD = None
+EMPLOYER_DASHBOARD_YEAR = None
 OUTPUT_DIR = Path()
 CLEANED_TRACKER = OUTPUT_DIR / "report_data_cleaned.csv"
 SUMMARY = OUTPUT_DIR / "cleanup_summary.md"
@@ -60,6 +62,7 @@ SCHOOL_ALIASES = {
     "umass cics": "UMass Amherst",
     "umass graduate school": "UMass Amherst",
     "umass amherst isenberg msba": "UMass Amherst",
+    "umass dacss": "UMass Amherst",
     "university of massachusetts amherst": "UMass Amherst",
     "northeastern ms cs": "Northeastern University",
     "georgia institute of technology": "Georgia Institute of Technology",
@@ -146,6 +149,13 @@ REQUIRED_TRACKER_HEADERS = {
     "Careers Survey Timestamp",
     "Interactions",
     "Doc Reviews",
+}
+
+REQUIRED_EMPLOYER_DASHBOARD_HEADERS = {
+    "Email",
+    "FDS Year",
+    "Outcome",
+    "Employer",
 }
 
 
@@ -301,6 +311,74 @@ def stable_record_key(email):
     return hashlib.sha256(normalize_space(email).lower().encode("utf-8")).hexdigest()
 
 
+def dashboard_year_matches(value, year):
+    """Accept numeric or text report-year cells without accepting partial dates."""
+    text = normalize_space(value)
+    return text == str(year) or text == f"{year}.0"
+
+
+def read_employer_dashboard_lookup():
+    """Return one curated full-time employer per email, plus ambiguous-email keys.
+
+    The Employer Dashboard is an optional authority for employer spelling and
+    consolidation. Only records explicitly labelled Job for the requested FDS
+    year participate; Dashboard internship records are deliberately excluded.
+    """
+    if EMPLOYER_DASHBOARD is None:
+        return {}, set()
+
+    workbook = load_workbook(EMPLOYER_DASHBOARD, read_only=True, data_only=True)
+    required_sheets = {"Data", "Employers"}
+    missing_sheets = required_sheets - set(workbook.sheetnames)
+    if missing_sheets:
+        raise ValueError(
+            "Employer Dashboard is missing required sheets: "
+            + ", ".join(sorted(missing_sheets))
+        )
+
+    employers_sheet = workbook["Employers"]
+    employer_headers = list(next(employers_sheet.iter_rows(values_only=True)))
+    if not employer_headers or employer_headers[0] != "Employer":
+        raise ValueError("Employer Dashboard Employers sheet must begin with an Employer column")
+    curated_employers = {}
+    for row in employers_sheet.iter_rows(min_row=2, values_only=True):
+        employer = normalize_space(row[0] if row else "")
+        if employer:
+            curated_employers.setdefault(employer.casefold(), employer)
+
+    data_sheet = workbook["Data"]
+    headers = list(next(data_sheet.iter_rows(values_only=True)))
+    positions = {normalize_space(header): index for index, header in enumerate(headers)}
+    missing_headers = REQUIRED_EMPLOYER_DASHBOARD_HEADERS - positions.keys()
+    if missing_headers:
+        raise ValueError(
+            "Employer Dashboard Data sheet is missing required columns: "
+            + ", ".join(sorted(missing_headers))
+        )
+
+    candidates = defaultdict(set)
+    for row in data_sheet.iter_rows(min_row=2, values_only=True):
+        email = normalize_space(row[positions["Email"]]).casefold()
+        outcome = normalize_space(row[positions["Outcome"]]).casefold()
+        employer = normalize_space(row[positions["Employer"]])
+        if not email or outcome != "job":
+            continue
+        if not dashboard_year_matches(row[positions["FDS Year"]], EMPLOYER_DASHBOARD_YEAR):
+            continue
+        canonical = curated_employers.get(employer.casefold())
+        if canonical:
+            candidates[email].add(canonical)
+
+    lookup = {}
+    ambiguous = set()
+    for email, employers in candidates.items():
+        if len(employers) == 1:
+            lookup[email] = next(iter(employers))
+        else:
+            ambiguous.add(email)
+    return lookup, ambiguous
+
+
 def read_dashboard_work_auth_rows():
     workbook = load_workbook(SOURCE, read_only=True, data_only=True)
     if "Dashboard_Data" not in workbook.sheetnames:
@@ -335,17 +413,37 @@ def read_dashboard_work_auth_rows():
 def build_outputs():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     validate_input_workbook()
+    dashboard_employers, dashboard_ambiguous_emails = read_employer_dashboard_lookup()
 
     cleaned_rows = []
     for row_number, raw, cached in read_tracker_rows():
         outcome_report = clean_outcome(raw["Outcomes Status"])
         employer_report = canonicalize(raw["Employer"], EMPLOYER_ALIASES)
+        employer_dashboard_candidate = ""
+        employer_dashboard_status = "not_configured"
+        employer_source = "hypercare"
         role_report = canonicalize(raw["Role"], ROLE_ALIASES)
         school_report = canonicalize(raw["School Name"], SCHOOL_ALIASES)
         degree_report = clean_degree(raw["Degree"])
         major_report = canonicalize(raw["Majors Name"], MAJOR_ALIASES)
         state_report = clean_state(raw["Location - State"], raw["Location"])
         flags = []
+        email_key = normalize_space(raw["Email"]).casefold()
+        if EMPLOYER_DASHBOARD is not None and outcome_report == "Working":
+            if email_key in dashboard_ambiguous_emails:
+                employer_dashboard_status = "ambiguous_dashboard_job_match"
+                flags.append("employer_dashboard_ambiguous_match")
+            elif email_key in dashboard_employers:
+                employer_dashboard_candidate = dashboard_employers[email_key]
+                employer_dashboard_status = "qualified_dashboard_job_match"
+                employer_source = "employer_dashboard"
+                if employer_report != employer_dashboard_candidate:
+                    flags.append("employer_dashboard_override_review")
+                employer_report = employer_dashboard_candidate
+            else:
+                employer_dashboard_status = "no_qualified_dashboard_job_match"
+        elif EMPLOYER_DASHBOARD is not None:
+            employer_dashboard_status = "not_applicable_nonworking"
         if outcome_report == "Working" and not employer_report:
             flags.append("working_missing_employer")
         if outcome_report == "Working" and not role_report:
@@ -366,6 +464,9 @@ def build_outputs():
             "positive_outcome": outcome_report in {"Working", "Continuing Education"},
             "employer_raw": raw["Employer"],
             "employer_report": employer_report,
+            "employer_dashboard_candidate": employer_dashboard_candidate,
+            "employer_dashboard_status": employer_dashboard_status,
+            "employer_source": employer_source,
             "role_raw": raw["Role"],
             "role_report": role_report,
             "school_raw": raw["School Name"],
@@ -442,7 +543,8 @@ def write_review_queue(rows):
     """Write only records needing human review to the private output directory."""
     fields = [
         "source_row", "program", "degree_confer_date", "outcome_report",
-        "employer_raw", "employer_report", "role_raw", "role_report",
+        "employer_raw", "employer_dashboard_candidate", "employer_dashboard_status",
+        "employer_source", "employer_report", "role_raw", "role_report",
         "school_raw", "school_report", "location_raw", "state_raw",
         "state_report", "major_raw", "major_report", "cleanup_flags",
     ]
@@ -504,6 +606,10 @@ def write_manifest(rows):
             NORMALIZATION_AUDIT.name,
         ],
     }
+    if EMPLOYER_DASHBOARD is not None:
+        manifest["employer_dashboard_file"] = EMPLOYER_DASHBOARD.name
+        manifest["employer_dashboard_sha256"] = sha256(EMPLOYER_DASHBOARD)
+        manifest["employer_dashboard_year"] = EMPLOYER_DASHBOARD_YEAR
     MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
 def markdown_count_table(title, counts, limit=15):
@@ -548,6 +654,20 @@ def write_summary(rows):
         lines.append(f"| {flag} | {count} |")
     lines.append("")
 
+    if EMPLOYER_DASHBOARD is not None:
+        working_dashboard_rows = [row for row in working_rows if row["employer_dashboard_status"] == "qualified_dashboard_job_match"]
+        overridden_rows = [row for row in working_rows if "employer_dashboard_override_review" in row["cleanup_flags"]]
+        ambiguous_rows = [row for row in working_rows if row["employer_dashboard_status"] == "ambiguous_dashboard_job_match"]
+        lines += [
+            "## Employer Dashboard reconciliation",
+            "",
+            f"- Authority workbook: `{EMPLOYER_DASHBOARD}` (FDS year {EMPLOYER_DASHBOARD_YEAR}; Job records only)",
+            f"- Working rows with one qualified Dashboard job match: {len(working_dashboard_rows)} / {len(working_rows)}",
+            f"- Dashboard employer overrides requiring review: {len(overridden_rows)}",
+            f"- Ambiguous Dashboard job matches: {len(ambiguous_rows)}",
+            "",
+        ]
+
     lines += markdown_count_table("Outcome Names", counter_for(rows, "outcome_report"))
     lines += markdown_count_table("Top Employers", counter_for(working_rows, "employer_report"), 20)
     lines += markdown_count_table("Top Roles", counter_for(working_rows, "role_report"), 20)
@@ -568,12 +688,31 @@ if __name__ == "__main__":
         required=True,
         help="Private directory for generated row-level and review artifacts",
     )
+    parser.add_argument(
+        "--employer-dashboard",
+        type=Path,
+        help=(
+            "Optional Employer Dashboard workbook used as the curated employer authority; "
+            "only same-year Dashboard Job rows are eligible"
+        ),
+    )
+    parser.add_argument(
+        "--employer-dashboard-year",
+        type=int,
+        help="Required FDS Year when --employer-dashboard is supplied",
+    )
     args = parser.parse_args()
 
     if not args.input.is_file():
         parser.error(f"input workbook not found: {args.input}")
+    if (args.employer_dashboard is None) != (args.employer_dashboard_year is None):
+        parser.error("--employer-dashboard and --employer-dashboard-year must be supplied together")
+    if args.employer_dashboard is not None and not args.employer_dashboard.is_file():
+        parser.error(f"employer dashboard workbook not found: {args.employer_dashboard}")
 
     SOURCE = args.input.resolve()
+    EMPLOYER_DASHBOARD = args.employer_dashboard.resolve() if args.employer_dashboard else None
+    EMPLOYER_DASHBOARD_YEAR = args.employer_dashboard_year
     OUTPUT_DIR = args.output_dir.resolve()
     CLEANED_TRACKER = OUTPUT_DIR / "report_data_cleaned.csv"
     SUMMARY = OUTPUT_DIR / "cleanup_summary.md"

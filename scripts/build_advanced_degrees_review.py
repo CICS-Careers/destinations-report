@@ -18,6 +18,7 @@ PUBLIC_SCHOOLS = {
         "UMass Amherst", "Northeastern University", "Georgia Institute of Technology",
         "Duke University", "Columbia University", "University of Illinois Urbana-Champaign",
         "NYU", "Harvard Graduate School of Education", "Carnegie Mellon University",
+        "Boston University",
     },
     "Informatics BS Pursuing MS": {
         "UMass Amherst", "University of Texas at Dallas",

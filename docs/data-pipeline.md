@@ -26,10 +26,26 @@ No one person should silently change both source data and public figures without
    python3 -m pip install -r requirements.txt
    python3 scripts/clean_2026_report_data.py \
      --input private/source/2026-08-21-approved.xlsx \
+     --employer-dashboard private/source/employer-dashboard-2026-approved.xlsx \
+     --employer-dashboard-year 2026 \
      --output-dir private/releases/2026-08-21
    ```
 
-   The run first validates the workbook contract (`TRACKER` sheet and required headers). It then creates a cleaned row export, aggregate dashboard summary, cleanup summary, review queue, normalization audit, and a manifest containing the source SHA-256 checksum.
+   The run first validates the workbook contract (`TRACKER` sheet and required headers). When an Employer Dashboard is supplied, it also validates `Data` and `Employers`; only `Data` records whose FDS year equals the release year and whose Outcome is exactly `Job` may provide a curated employer. Dashboard `Internship` records are never used to fill or overwrite a Destinations Report employer. It then creates a cleaned row export, aggregate dashboard summary, cleanup summary, review queue, normalization audit, and a manifest containing both source SHA-256 checksums.
+
+   Hypercare remains the authority for cohort membership and outcome status. The Employer Dashboard is the authority only for qualifying employer spelling/consolidation. A one-to-one Dashboard job match is applied as a candidate employer; any difference from Hypercare receives `employer_dashboard_override_review` in `review_queue.csv` and must be approved before its aggregate is published. Missing or ambiguous Dashboard matches retain the Hypercare value and are flagged rather than guessed.
+
+   For the employer headline, repeat-hire count, logo carousel, and employer-specific footnote, do **not** count the Hypercare export or append unmatched Hypercare records. Build these directly from the Employer Dashboard’s `Data` sheet so that the metric uses one cohort definition: FDS year, `Outcome = Job`, and the Dashboard’s curated employer names. This is deliberately different from the broader Hypercare working-outcome population.
+
+   ```sh
+   python3 scripts/build_employer_dashboard_review.py \
+     --input private/source/employer-dashboard-2026-approved.xlsx \
+     --year 2026 \
+     --summary-output private/releases/2026-08-21/employer_dashboard_summary.csv \
+     --employers-output private/releases/2026-08-21/employer_dashboard_employers.csv
+   ```
+
+   Review the first file for the displayed employer and repeat-hire counts, and use the second only as a private logo/tooltip candidate list. The source-specific method must appear in the approved section plan and public footnote.
 3. **Compare the candidate with the current production baseline.** Preserve the prior approved `dashboard_summary_cleaned.csv` in the protected release archive. Then run:
 
    ```sh
@@ -105,7 +121,7 @@ No one person should silently change both source data and public figures without
 
 - Workbook name, owner, as-of date, and SHA-256 checksum.
 - Baseline-versus-candidate `metric_changes.csv`, any section-specific review packs (including `advanced_degrees_review.csv` and `salary_review.csv` when relevant), and an approved front-end scope plan.
-- Signed normalization-review file, including any new aliases or rule changes.
+- Signed normalization-review file, including any new aliases or rule changes, and—in releases using the Employer Dashboard—review decisions for every `employer_dashboard_override_review` or `employer_dashboard_ambiguous_match` flag.
 - Cohort and denominator definitions for every outcome chart.
 - A spotlight decision record for every included, held, or excluded candidate, tied to the frozen workbook checksum.
 - Completed exception/review decisions file in the protected release folder.
@@ -118,6 +134,7 @@ Block publication when any of these is unresolved:
 
 - The workbook does not have the required `TRACKER` sheet and expected columns.
 - A normalization change has not received two-person approval, or its approved mapping does not match the cleaner code.
+- An Employer Dashboard override or ambiguity has not been reviewed, or an internship/non-matching report year was allowed to affect a report employer.
 - A public report area changes without a section-level delta assessment and approved front-end decision, or a requested retention/defer decision is not honored.
 - An additions-only release removes or downgrades a prior public item without an approved exception and protected stable-key reconciliation.
 - The review queue contains an unexplained record or a decision references a different source checksum.

@@ -7,7 +7,7 @@
 .borders {stroke:#222222; stroke-width:0.8}
 .dccircle {display:yes; fill:#f7cae1; stroke:#222222; stroke-width:0.8}
 .separator1 {stroke:#222222; stroke-width:1.2}
-.ar,.ca,.ct,.dc,.ga,.id,.il,.ma,.md,.nh,.nj,.ny,.ok,.pa,.ri,.tx,.va,.wa {fill:#f7cae1}
+.ar,.ca,.ct,.dc,.ga,.id,.il,.ma,.md,.nh,.nj,.ny,.pa,.ri,.tx,.va,.wa {fill:#f7cae1}
 </style>
 </defs>
 

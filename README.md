@@ -21,18 +21,26 @@ The GitHub Pages workflow intentionally deploys only web assets. It must never d
 python3 -m pip install -r requirements.txt
 python3 scripts/clean_2026_report_data.py \
   --input private/source/<approved-workbook>.xlsx \
+  --employer-dashboard private/source/<approved-employer-dashboard>.xlsx \
+  --employer-dashboard-year 2026 \
   --output-dir private/releases/<release-date>
 
 python3 scripts/build_advanced_degrees_review.py \
   --input private/releases/<release-date>/report_data_cleaned.csv \
   --output private/releases/<release-date>/advanced_degrees_review.csv
 
+python3 scripts/build_employer_dashboard_review.py \
+  --input private/source/<approved-employer-dashboard>.xlsx \
+  --year 2026 \
+  --summary-output private/releases/<release-date>/employer_dashboard_summary.csv \
+  --employers-output private/releases/<release-date>/employer_dashboard_employers.csv
+
 python3 scripts/build_salary_review.py \
   --input private/source/<approved-workbook>.xlsx \
   --output private/releases/<release-date>/salary_review.csv
 ```
 
-The `private/` directory is ignored on purpose. See [data-pipeline.md](docs/data-pipeline.md) for required review evidence, quality gates, and roles.
+The Employer Dashboard option uses only same-year rows classified as `Job`; it deliberately excludes internships and flags any employer value that would override Hypercare for human approval. The `private/` directory is ignored on purpose. See [data-pipeline.md](docs/data-pipeline.md) for required review evidence, quality gates, and roles.
 
 ## Repository layout
 
