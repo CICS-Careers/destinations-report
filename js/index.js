@@ -1071,6 +1071,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const wrappers = document.querySelectorAll(".logo-scroll-wrapper");
 
   wrappers.forEach(wrapper => {
+    if (wrapper.classList.contains("advanced-degree-static")) return;
+
     const scrollContainer = wrapper.querySelector(".logo-scroll");
     if (!scrollContainer) return;
     

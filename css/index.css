@@ -288,6 +288,15 @@ div.popular-roles-wrap{
     background-color: #f8f9fa;
 }
 
+/* The Master's four-program Advanced Degrees row is intentionally static. */
+.advanced-degree-static .logo-scroll {
+    padding: 0;
+}
+
+.advanced-degree-static .scroll-btn {
+    display: none;
+}
+
 
 /* 1. Prevent clipping by parents */
 nav,
