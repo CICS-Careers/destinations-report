@@ -130,7 +130,7 @@ const MSdata2026 = {
     labels: Labels,
     datasets: [{
         label: ' Number of Students',
-        data: [45, 7, 14, 3, 3],
+        data: [45, 6, 15, 3, 3],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
@@ -1071,6 +1071,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const wrappers = document.querySelectorAll(".logo-scroll-wrapper");
 
   wrappers.forEach(wrapper => {
+    if (wrapper.classList.contains("advanced-degree-static")) return;
+
     const scrollContainer = wrapper.querySelector(".logo-scroll");
     if (!scrollContainer) return;
     

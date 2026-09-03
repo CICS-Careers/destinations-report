@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1266" viewBox="0 0 959 593">
-  <title>Blank map of the United States, territories not included</title>
+  <title>Master's graduate work locations in the United States</title>
 <defs>
 <style type="text/css">
 .state {fill:#d3ddde; stroke:#222222; stroke-width:0.8; stroke-linejoin:round}
 .borders {stroke:#222222; stroke-width:0.8}
 .dccircle {display:yes; fill:#f7cae1; stroke:#222222; stroke-width:0.8}
 .separator1 {stroke:#222222; stroke-width:1.2}
-.ar,.ca,.ct,.dc,.ga,.id,.il,.ma,.md,.nh,.nj,.ny,.pa,.ri,.tx,.va,.wa {fill:#f7cae1}
+.ca,.co,.ct,.ma,.md,.mn,.nh,.ny,.ri,.tx,.va,.wa,.wi {fill:#f7cae1}
 </style>
 </defs>
 

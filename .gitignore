@@ -1,3 +1,9 @@
 .idea/
 .DS_Store
 AWSCLIV2.pkg
+
+# Sensitive source workbooks and review artifacts stay local. Do not force-add
+# these files: they can contain student-level outcomes and identifiers.
+private/
+*.xlsx
+*.xlsm

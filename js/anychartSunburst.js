@@ -14,6 +14,10 @@ anychart.onDocumentReady(function () {
     chart.level(1).thickness("25%");
     chart.level(2).thickness("50%");
     chart.palette(palette2)
+    chart.listen("pointClick", function (event) {
+      var roleName = event.point && event.point.get("name");
+      if (roleName && window.selectCareerRole) window.selectCareerRole(roleName, containerId);
+    });
     chart.container(containerId);
     chart.draw();
     return chart;
@@ -136,6 +140,7 @@ anychart.onDocumentReady(function () {
           name: "Data",
           children: [
             { name: "Data Analyst" },
+            { name: "Data Scientist" },
             { name: "Actuarial Analyst" },
             { name: "Data Engineer" },
             { name: "Data Analytics Consultant" },
