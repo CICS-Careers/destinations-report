@@ -341,7 +341,7 @@ const PhDdata2026 = {
     labels: PhDLabels2026,
     datasets: [{
         label: ' Number of Students',
-        data: [15, 5, 6, 2],
+        data: [33, 7, 2, 2],
         backgroundColor: [
             UMassColors.GREEN,
             UMassColors.TEAL,
