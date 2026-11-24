@@ -7,3 +7,24 @@ AWSCLIV2.pkg
 private/
 *.xlsx
 *.xlsm
+*.xls
+*.xlsb
+*.ods
+*.numbers
+
+# Outputs of the data-preparation scripts belong in private/releases/, never in
+# Git. Only the empty review templates under templates/ are tracked. To publish
+# an approved aggregate file, add an explicit exception here in a reviewed PR.
+data/
+*.csv
+*.tsv
+!templates/*.csv
+*.parquet
+*.feather
+*.sqlite
+*.db
+reconciliation_summary.json
+release_manifest.json
+
+# Local site build output.
+_site/
